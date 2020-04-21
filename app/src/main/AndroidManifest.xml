@@ -9,11 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".DashbordActivity"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".LupaPassActivity"/>
-        <activity android:name=".ChatActivity"/>
-        <activity android:name=".BuyActivity"></activity>
+        <activity android:name=".LupaPassActivity" />
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".BuyActivity" />
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
