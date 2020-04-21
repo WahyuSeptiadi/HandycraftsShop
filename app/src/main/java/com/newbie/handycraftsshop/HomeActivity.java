@@ -16,7 +16,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        btnBuy = findViewById(R.id.btnBuy);
+        /*
+        btnBuy = findViewById(R.id.btn_beli_home);
 
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,5 +26,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(toBuy);
             }
         });
+
+         */
     }
 }
