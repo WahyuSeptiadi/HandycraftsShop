@@ -8,4 +8,6 @@
     <string name="rp_16_000">Rp. 16.000</string>
     <string name="value_stock">250</string>
     <string name="btn_buy">Buy</string>
+    <string name="register">Register</string>
+    <string name="profile">Profile</string>
 </resources>
