@@ -10,4 +10,15 @@
     <string name="btn_buy">Buy</string>
     <string name="register">Register</string>
     <string name="profile">Profile</string>
+    <string name="activity_login_email">Email</string>
+    <string name="activity_login_password">Password</string>
+    <string name="activity_login_register">Register, jika belum memunyai akun</string>
+    <string name="activity_login_forget">Lupa Password?</string>
+    <string name="activity_login_remember">Remember me</string>
+    <string name="activity_login_logining">Login</string>
+    <string name="activity_post_headtext">Post</string>
+    <string name="activity_post_harga">Harga</string>
+    <string name="activity_post_total">Total harga</string>
+    <string name="activity_post_map">Posisi Anda</string>
+    <string name="activity_post_posting">Post Barang</string>
 </resources>
