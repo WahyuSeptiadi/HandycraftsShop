@@ -35,6 +35,12 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
                 mContext.startActivity(toBuy);
             }
         });
+        holder.imgfavorite_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
