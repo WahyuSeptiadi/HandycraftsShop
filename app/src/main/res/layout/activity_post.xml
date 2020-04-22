@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostActivity"
+    tools:context=".Activity.PostActivity"
     android:background="@drawable/background_post"
     tools:ignore="ExtraText">
     'Copyright by Adrien on Pexels'
@@ -21,7 +22,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/btnBackPost"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -57,7 +58,7 @@
         android:padding="10dp"
         android:src="@drawable/add_photo_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnBackPost"
+        app:layout_constraintStart_toEndOf="@+id/btnBack"
         app:layout_constraintTop_toBottomOf="@+id/topBar" />
         'Copyright by Good Ware on FlatIcon'
 
@@ -102,7 +103,7 @@
         app:layout_constraintTop_toBottomOf="@+id/et_post_price" />
 
     <Button
-        android:id="@+id/btn_login_login"
+        android:id="@+id/btn_postBarang"
         android:layout_width="310dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_login_password"

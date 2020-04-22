@@ -1,14 +1,16 @@
-package com.newbie.handycraftsshop;
+package com.newbie.handycraftsshop.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class DashbordActivity extends AppCompatActivity {
+import com.newbie.handycraftsshop.R;
+
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashbord);
+        setContentView(R.layout.activity_register);
     }
 }
