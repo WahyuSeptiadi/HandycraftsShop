@@ -1,123 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="@drawable/background_login">
-
-    <RelativeLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.LoginActivity">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        tools:context=".ui.LoginActivity">
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        >
 
         <RelativeLayout
-            android:id="@+id/rv_login_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="ExtraText">
+            android:layout_marginTop="50dp"
+            >
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/cv_login_logo"
-                android:layout_height="170dp"
-                android:layout_width="170dp"
-                android:layout_centerHorizontal="true"
-                android:foregroundGravity="top"
-                android:padding="10dp"
-                android:src="@drawable/main_icon"
-                />
-                'Image copyright by Nhor Phai on FlatIcon'
-
-            <LinearLayout
-                android:id="@+id/ll_login_box"
+            <RelativeLayout
+                android:id="@+id/rv_login_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="180dp"
-                android:background="@drawable/background_edit_text"
-                android:orientation="vertical"
-                android:padding="18dp">
+                >
 
-                <EditText
-                    android:id="@+id/et_login_username"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/cv_login_logo"
+                    android:layout_height="170dp"
+                    android:layout_width="170dp"
+                    android:layout_centerHorizontal="true"
+                    android:foregroundGravity="top"
+                    android:padding="10dp"
+                    android:src="@drawable/main_icon"
+                    />
+                'Image copyright by Nhor Phai on FlatIcon'
+
+                <TextView
+                    android:id="@+id/tv_namaapk"
+                    android:layout_below="@id/cv_login_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="HANDYCRAFTS"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    />
+                <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/tv_namaapk"
+                    android:id="@+id/ll_login_box"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="20dp"
-                    android:background="@android:color/white"
-                    android:hint="@string/activity_login_email"
-                    android:textColorHint="@android:color/black"
-                    android:inputType="textEmailAddress"
-                    android:paddingTop="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="14dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/background_tampilan_login"
+                    android:padding="18dp">
 
-                <EditText
-                    android:id="@+id/et_login_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="30dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@android:color/white"
-                    android:hint="@string/activity_login_password"
-                    android:textColorHint="@android:color/black"
-                    android:inputType="textPassword"
-                    android:paddingTop="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="14dp"/>
+                    <EditText
+                        android:id="@+id/et_login_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/background_edit_text"
+                        android:hint="@string/activity_login_email"
+                        android:inputType="textEmailAddress"
+                        android:paddingTop="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="14dp"
+                        />
 
-                <Button
-                    android:id="@+id/btn_login_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/background_button"
-                    android:textColor="@android:color/white"
-                    android:text="@string/activity_login_logining"
-                    android:layout_weight="1"
-                    android:textAllCaps="false"
-                    android:textSize="15sp"/>
+                    <EditText
+                        android:id="@+id/et_login_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="24dp"
+                        android:background="@drawable/background_edit_text"
+                        android:hint="@string/activity_login_password"
+                        android:inputType="textPassword"
+                        android:paddingTop="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="14dp"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btn_login_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/background_button"
+                        android:textColor="@android:color/white"
+                        android:text="@string/activity_login_logining"
+                        android:layout_weight="1"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"/>
 
-<!--                    <CheckBox-->
-<!--                        android:id="@+id/cb_login_remember"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/activity_login_remember"/>-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tv_login_forgot"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="@string/activity_login_forget"
-                        android:textColor="#000000" />
-                </RelativeLayout>
+                        <!--                    <CheckBox-->
+                        <!--                        android:id="@+id/cb_login_remember"-->
+                        <!--                        android:layout_width="wrap_content"-->
+                        <!--                        android:layout_height="wrap_content"-->
+                        <!--                        android:text="@string/activity_login_remember"/>-->
 
-            </LinearLayout>
-
+                        <TextView
+                            android:id="@+id/tv_login_forgot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="@string/activity_login_forget"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="#000000" />
+                        <TextView
+                            android:id="@+id/tv_login_daftar"
+                            android:layout_below="@id/tv_login_forgot"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@android:color/black"
+                            android:text="@string/activity_login_register"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_login_daftar"
-            android:layout_marginTop="38dp"
-            android:layout_marginBottom="38dp"
-            android:layout_below="@+id/rv_login_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textColor="@android:color/black"
-            android:text="@string/activity_login_register"/>
-    </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

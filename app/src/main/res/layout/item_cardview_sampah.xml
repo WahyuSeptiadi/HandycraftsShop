@@ -40,6 +40,7 @@
                 android:src="@drawable/heart"
                 />
             <Button
+                android:elevation="10dp"
                 android:id="@+id/btn_beli_home"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
@@ -50,7 +51,5 @@
                 android:background="@drawable/background_button"
                 />
         </LinearLayout>
-
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

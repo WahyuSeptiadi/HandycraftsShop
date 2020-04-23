@@ -32,24 +32,44 @@
         android:textSize="18sp"
         android:textColor="#fff"/>
 
-    <EditText
-        android:id="@+id/editText_lupa_password"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/topBar"
+        android:id="@+id/ll_login_box"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:ems="10"
-        android:hint="Email"
-        android:layout_below="@+id/topBar"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        android:background="@drawable/background_tampilan_login"
+        android:padding="18dp">
 
-    <Button
-        android:id="@+id/btn_password_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:text="RESET PASSWORD"
-        android:layout_below="@+id/editText_lupa_password" />
+        <EditText
+            android:id="@+id/editText_lupa_password"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_edit_text"
+            android:hint="Password Baru"
+            android:layout_marginBottom="8dp"
+            android:inputType="textEmailAddress"
+            android:paddingTop="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="14dp"
+            />
+
+
+        <Button
+            android:id="@+id/btn_password_reset"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_button"
+            android:textColor="@android:color/white"
+            android:text="Reset Password"
+            android:layout_weight="1"
+            android:textSize="15sp"/>
+    </LinearLayout>
 
 </RelativeLayout>
