@@ -90,12 +90,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     if (task.isSuccessful()){
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        Toast.makeText(RegisterActivity.this, "Register Anda Berhasil!", Toast.LENGTH_SHORT).show();
                                         startActivity(intent);
                                     }
                                 }
                             });
                         } else{
-                            Toast.makeText(RegisterActivity.this, "You can't register with this email", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Register Anda Gagal!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

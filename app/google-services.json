@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "850671492918",
+    "firebase_url": "https://handycrafts-shop.firebaseio.com",
+    "project_id": "handycrafts-shop",
+    "storage_bucket": "handycrafts-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850671492918:android:11caef7881392f74671d97",
+        "android_client_info": {
+          "package_name": "com.newbie.handycraftsshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850671492918-9bfe1cvr4d8au3c01buto4svsjqo3sdj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newbie.handycraftsshop",
+            "certificate_hash": "3cbf45cdd9fe2b6ff10ec66dec9a450a4655ff8b"
+          }
+        },
+        {
+          "client_id": "850671492918-6di88t3dd9qf6tgsu6kns8q0lrc9uqg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.newbie.handycraftsshop",
+            "certificate_hash": "0899879f119a4b1518d8dde3e0781ada47c01d6e"
+          }
+        },
+        {
+          "client_id": "850671492918-nuleova9fb74qus0d4bgrqiqq0qmulmv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVHqwbthhfUZtyPdEwbVTG11zOEt6cnD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850671492918-nuleova9fb74qus0d4bgrqiqq0qmulmv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
