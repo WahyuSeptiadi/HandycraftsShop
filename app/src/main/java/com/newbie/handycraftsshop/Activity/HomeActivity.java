@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnBuy;
     private TextView namaUser;
     private CircleImageView ppUser;
+    private ImageView imgChat;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -43,7 +43,15 @@ public class HomeActivity extends AppCompatActivity {
 
         ppUser = findViewById(R.id.imageprofile_home);
         namaUser = findViewById(R.id.tv_nameprofile_home);
+        imgChat = findViewById(R.id.imgChat);
 
+        imgChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toChat = new Intent(HomeActivity.this, DaftarChatActivity.class);
+                startActivity(toChat);
+            }
+        });
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
