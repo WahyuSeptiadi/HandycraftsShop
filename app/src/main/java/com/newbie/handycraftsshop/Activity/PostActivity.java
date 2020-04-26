@@ -18,14 +18,14 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        btnPost = findViewById(R.id.btn_postBarang);
-
-        btnPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent toHome = new Intent(PostActivity.this, HomeActivity.class);
-                startActivity(toHome);
-            }
-        });
+//        btnPost = findViewById(R.id.btn_postBarang);
+//
+//        btnPost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent toHome = new Intent(PostActivity.this, HomeActivity.class);
+//                startActivity(toHome);
+//            }
+//        });
     }
 }

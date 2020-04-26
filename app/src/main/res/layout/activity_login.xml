@@ -7,13 +7,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             >
 
             <RelativeLayout
@@ -28,7 +27,6 @@
                     android:layout_width="170dp"
                     android:layout_centerHorizontal="true"
                     android:foregroundGravity="top"
-                    android:padding="10dp"
                     android:src="@drawable/main_icon"
                     />
                 'Image copyright by Nhor Phai on FlatIcon'
@@ -53,7 +51,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:orientation="vertical"
-                    android:background="@drawable/background_tampilan_login"
+                    android:background="@drawable/background_item"
                     android:padding="18dp">
 
                     <EditText

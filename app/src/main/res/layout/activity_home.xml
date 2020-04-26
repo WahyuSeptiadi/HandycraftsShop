@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Activity.HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/design_default_color_primary"
         android:layout_gravity="center_horizontal">
 
         <RelativeLayout
+            android:id="@+id/list"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageprofile_home"
@@ -49,11 +50,24 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_cardview_sampah"
-        />
-</LinearLayout>
+        android:layout_below="@+id/topBar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ic_add"
+        app:borderWidth="0dp"
+        android:elevation="6dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="300dp"
+        app:fabSize="normal"/>
+</RelativeLayout>

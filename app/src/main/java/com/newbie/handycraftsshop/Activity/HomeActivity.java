@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView namaUser;
     private CircleImageView ppUser;
     private ImageView imgChat;
+    private FloatingActionButton fab;
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -44,12 +46,21 @@ public class HomeActivity extends AppCompatActivity {
         ppUser = findViewById(R.id.imageprofile_home);
         namaUser = findViewById(R.id.tv_nameprofile_home);
         imgChat = findViewById(R.id.imgChat);
+        fab = findViewById(R.id.fabPost);
 
         imgChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toChat = new Intent(HomeActivity.this, DaftarChatActivity.class);
                 startActivity(toChat);
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toPost = new Intent(HomeActivity.this, PostActivity.class);
+                startActivity(toPost);
             }
         });
 

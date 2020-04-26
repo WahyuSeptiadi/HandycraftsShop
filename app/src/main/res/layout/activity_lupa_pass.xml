@@ -41,7 +41,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:orientation="vertical"
-        android:background="@drawable/background_tampilan_login"
+        android:background="@drawable/background_item"
         android:padding="18dp">
 
         <EditText

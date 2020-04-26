@@ -20,7 +20,7 @@
         <activity android:name=".Activity.LupaPassActivity" />
         <activity android:name=".Activity.ChatActivity" />
         <activity android:name=".Activity.BuyActivity" />
-        <activity android:name=".Activity.DashbordActivity">
+        <activity android:name=".Activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
