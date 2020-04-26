@@ -97,11 +97,15 @@ public class ChatsFragment extends Fragment {
                     for (String id : usersList){
                         if (user.getId().equals(id)){
                             if (mUser.size() != 0) {
-                                for (User user1 : mUser) {
+                                for (User user1 : new ArrayList< User >(mUser)) {
                                     if (!user.getId().equals(user1.getId())) {
-                                        mUser.add(user);
                                     }
                                 }
+//                                for (User user1 : mUser) {
+//                                    if (!user.getId().equals(user1.getId())) {
+//                                        mUser.add(user);
+//                                    }
+//                                }
                             } else{
                                 mUser.add(user);
                             }
