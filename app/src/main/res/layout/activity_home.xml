@@ -31,8 +31,9 @@
                 android:id="@+id/tv_nameprofile_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/imageprofile_home"
-                android:textColor="@color/hitam"
+                android:textColor="#fff"
                 android:textAllCaps="true" />
 
             <ImageView
