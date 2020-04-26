@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
         imgChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toChat = new Intent(ProfileActivity.this, ChatActivity.class);
+                Intent toChat = new Intent(ProfileActivity.this, DaftarChatActivity.class);
                 startActivity(toChat);
             }
         });

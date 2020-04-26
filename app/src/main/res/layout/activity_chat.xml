@@ -25,23 +25,26 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                android:background="#f3c623"
+                >
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:id="@+id/profile_image"/>
+                    android:id="@+id/profile_image_chat"
+                    android:src="@mipmap/ic_launcher"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/username"
+                    android:id="@+id/username_chat"
                     android:textSize="18sp"
                     android:layout_marginLeft="25dp"
                     android:textColor="#fff"
                     android:textStyle="bold"
                     android:layout_marginStart="25dp"
-                    android:text="Bell"
+                    android:text="Name"
                     />
 
             </androidx.appcompat.widget.Toolbar>
@@ -54,6 +57,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/appbar_chat"
         android:layout_above="@id/bottom_chat"
+        android:background="#faf4ff"
         />
 
     <RelativeLayout
@@ -66,10 +70,10 @@
         >
 
         <EditText
-            android:id="@+id/text_send"
+            android:id="@+id/text_send_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btn_send"
+            android:layout_toLeftOf="@+id/btn_send_chat"
             android:background="@android:color/transparent"
             android:hint="Type a message..."
             android:layout_centerVertical="true"
@@ -78,7 +82,7 @@
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/btn_send"
+            android:id="@+id/btn_send_chat"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/ic_send"/>

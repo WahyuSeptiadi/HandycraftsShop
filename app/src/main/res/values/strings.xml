@@ -21,4 +21,7 @@
     <string name="activity_post_total">Total harga</string>
     <string name="activity_post_map">Posisi Anda</string>
     <string name="activity_post_posting">Post Barang</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
