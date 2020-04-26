@@ -36,10 +36,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Register");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+  //      setSupportActionBar(toolbar);
+    //    getSupportActionBar().setTitle("Register");
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         re_email = (EditText)findViewById(R.id.et_email);
         re_username = (EditText)findViewById(R.id.et_username);
