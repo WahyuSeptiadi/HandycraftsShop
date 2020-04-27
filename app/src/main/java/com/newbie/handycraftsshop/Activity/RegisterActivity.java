@@ -67,9 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "All field are required", Toast.LENGTH_SHORT).show();
                 } else if(txt_password.length() < 6){
                     Toast.makeText(RegisterActivity.this, "password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                } /*else if(txt_password != txt_repassword){
+                } else if(!txt_password.equals(txt_repassword)){
                     Toast.makeText(RegisterActivity.this, "password and re-password is not match", Toast.LENGTH_SHORT).show();
-                } */else{
+                } else{
                     register(txt_username, txt_email, txt_password);
                 }
             }
