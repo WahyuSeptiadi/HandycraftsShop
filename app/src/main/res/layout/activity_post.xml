@@ -22,7 +22,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/btn_profile_back"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -52,7 +52,24 @@
         android:padding="10dp"
         android:src="@drawable/add_photo_icon"
         android:layout_below="@+id/topBar"/>
-        'Copyright by Good Ware on FlatIcon'
+    'Copyright by Good Ware on FlatIcon'
+
+    <EditText
+        android:id="@+id/et_post_name"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="57dp"
+        android:layout_weight="1"
+        android:background="@drawable/background_edit_text"
+        android:hint="Nama Barang"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="14dp"
+        android:layout_below="@+id/cv_post_item_photo"/>
 
     <EditText
         android:id="@+id/et_post_price"
@@ -63,13 +80,13 @@
         android:layout_marginEnd="57dp"
         android:layout_weight="1"
         android:background="@drawable/background_edit_text"
-        android:hint="@string/activity_post_harga"
-        android:inputType="textEmailAddress"
+        android:hint="Harga Barang"
+        android:inputType="number"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="14dp"
-        android:layout_below="@+id/cv_post_item_photo"/>
+        android:layout_below="@+id/et_post_name"/>
 
     <EditText
         android:id="@+id/et_post_location"
@@ -97,8 +114,7 @@
         android:layout_marginEnd="57dp"
         android:layout_weight="1"
         android:background="@drawable/background_edit_text"
-        android:hint="deskripsi"
-        android:inputType="textPassword"
+        android:hint="Deskripsi Barang"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingRight="16dp"
@@ -114,8 +130,8 @@
         android:layout_marginEnd="57dp"
         android:layout_weight="1"
         android:background="@drawable/background_edit_text"
-        android:hint="@string/activity_post_total"
-        android:inputType="textPassword"
+        android:hint="Stok Barang"
+        android:inputType="number"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
         android:paddingRight="16dp"

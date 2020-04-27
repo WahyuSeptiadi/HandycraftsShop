@@ -21,6 +21,7 @@
     <string name="activity_post_total">Total harga</string>
     <string name="activity_post_map">Posisi Anda</string>
     <string name="activity_post_posting">Post Barang</string>
+    <string name="google_map_api_key">AIzaSyBURYmKz8zSrfqhue4TugiSlF-bAuat8NQ</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

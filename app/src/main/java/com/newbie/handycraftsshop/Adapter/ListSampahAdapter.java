@@ -1,4 +1,4 @@
-package com.newbie.handycraftsshop;
+package com.newbie.handycraftsshop.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.newbie.handycraftsshop.Activity.BuyActivity;
+import com.newbie.handycraftsshop.R;
 
 public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.ListViewHolder> {
 
