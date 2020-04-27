@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.newbie.handycraftsshop.R;
 
 public class PostActivity extends AppCompatActivity {
 
     private Button btnPost;
+    ImageView btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +29,14 @@ public class PostActivity extends AppCompatActivity {
 //                startActivity(toHome);
 //            }
 //        });
+
+        btn_back = (ImageView)findViewById(R.id.btn_profile_back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

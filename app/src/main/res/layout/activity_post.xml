@@ -69,7 +69,6 @@
         android:paddingTop="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="14dp"
-        android:textColorHint="@android:color/black"
         android:layout_below="@+id/cv_post_item_photo"/>
 
     <EditText
@@ -87,7 +86,6 @@
         android:paddingTop="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="14dp"
-        android:textColorHint="@android:color/black"
         android:layout_below="@+id/et_post_deskripsi"/>
 
     <EditText
@@ -105,7 +103,6 @@
         android:paddingTop="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="14dp"
-        android:textColorHint="@android:color/black"
         android:layout_below="@+id/et_post_total_stock"/>
 
     <EditText
@@ -123,7 +120,6 @@
         android:paddingTop="16dp"
         android:paddingRight="16dp"
         android:paddingBottom="14dp"
-        android:textColorHint="@android:color/black"
         android:layout_below="@+id/et_post_price"/>
 
     <Button

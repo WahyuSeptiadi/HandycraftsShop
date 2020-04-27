@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,8 +27,10 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText re_email, re_username, re_password;
+    EditText re_email, re_username, re_password, re_repassword;
     Button btn_register;
+    ImageView btn_back;
+    TextView login;
 
     FirebaseAuth auth;
     DatabaseReference references;
@@ -45,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
         re_username = (EditText)findViewById(R.id.et_username);
         re_password = (EditText)findViewById(R.id.et_password);
         btn_register = (Button)findViewById(R.id.btn_login_login);
+        btn_back = (ImageView)findViewById(R.id.btn_profile_back);
+        login = (TextView)findViewById(R.id.tv_login_daftar);
+        re_repassword = (EditText)findViewById(R.id.et_repassword);
 
         auth = FirebaseAuth.getInstance();
 
@@ -54,17 +61,33 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_username = re_username.getText().toString();
                 String txt_email = re_email.getText().toString();
                 String txt_password = re_password.getText().toString();
+                String txt_repassword = re_repassword.getText().toString();
 
                 if (TextUtils.isEmpty(txt_username) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password)){
                     Toast.makeText(RegisterActivity.this, "All field are required", Toast.LENGTH_SHORT).show();
                 } else if(txt_password.length() < 6){
                     Toast.makeText(RegisterActivity.this, "password must be at least 6 characters", Toast.LENGTH_SHORT).show();
-                } else{
+                } /*else if(txt_password != txt_repassword){
+                    Toast.makeText(RegisterActivity.this, "password and re-password is not match", Toast.LENGTH_SHORT).show();
+                } */else{
                     register(txt_username, txt_email, txt_password);
                 }
             }
         });
 
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     private void register(final String username, String email, final String password){
