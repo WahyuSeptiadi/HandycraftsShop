@@ -7,7 +7,7 @@
     tools:context=".Activity.ProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/topBar"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary" />
@@ -35,7 +35,7 @@
         android:id="@+id/rl_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topBar">
+        android:layout_below="@id/toolbar">
 
         <LinearLayout
             android:id="@+id/ll_profile"
