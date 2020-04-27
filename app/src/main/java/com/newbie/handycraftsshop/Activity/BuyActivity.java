@@ -18,7 +18,7 @@ public class BuyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
 
-        btnBack = findViewById(R.id.btnBack);
+        btnBack = findViewById(R.id.btn_profile_back);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,7 +3,6 @@ package com.newbie.handycraftsshop.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -31,7 +30,7 @@ public class LupaPassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lupa_pass);
 
-        registeredEmail = findViewById(R.id.editText_lupa_password);
+        registeredEmail = findViewById(R.id.et_lupa_password_email);
         resetPasswordBtn = findViewById(R.id.btn_lupa_password_reseting);
         goBack = findViewById(R.id.btn_lupa_password_back);
         firebaseAuth =  FirebaseAuth.getInstance();
@@ -49,9 +48,10 @@ public class LupaPassActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(LupaPassActivity.this,"Email berhasil dikirim",Toast.LENGTH_LONG).show();
+                                LupaPassActivity.super.onBackPressed();
                             }else{
                                 String error = task.getException().getMessage();
-                                Toast.makeText(LupaPassActivity.this,error,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LupaPassActivity.this, error, Toast.LENGTH_SHORT).show();
                             }
                             resetPasswordBtn.setEnabled(true);
                         }

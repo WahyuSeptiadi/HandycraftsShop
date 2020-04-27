@@ -13,7 +13,7 @@
         android:background="@color/colorPrimary" />
 
     <ImageView
-        android:id="@+id/btnBack"
+        android:id="@+id/btn_profile_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -56,12 +56,13 @@
                 android:layout_weight="2">
 
                 <TextView
+                    android:id="@+id/tv_profile_nama_user"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="INI NAMA PROFILE"
-                    android:textColor="@color/hitam"
+                    android:layout_weight="1.5"
                     android:gravity="center"
-                    android:layout_weight="1.5"/>
+                    android:text="INI NAMA PROFILE"
+                    android:textColor="@color/hitam" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
