@@ -38,7 +38,7 @@ public class PostActivity extends AppCompatActivity {
     private static final String KEY_HARGA = "harga";
     private static final String KEY_NAMA = "nama barang";
     public static final int PICK_IMAGE = 1;
-    private ImageView iv_sampah;
+    private ImageView iv_sampah, btnBack;
     private FirebaseAuth mAuth;
     private Uri mImageUri;
     private StorageReference mStorageReference;
@@ -53,6 +53,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
         mStorageReference = FirebaseStorage.getInstance().getReference("uploads");
@@ -66,8 +67,8 @@ public class PostActivity extends AppCompatActivity {
         etStockBarang = findViewById(R.id.et_post_total_stock);
         etDeskripsi = findViewById(R.id.et_post_deskripsi);
         btnPost = findViewById(R.id.btn_postBarang);
+        btnBack = findViewById(R.id.btnBack);
         iv_sampah = findViewById(R.id.cv_post_item_photo);
-//        postBarang =
 
         iv_sampah.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,13 +80,18 @@ public class PostActivity extends AppCompatActivity {
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 tambahBarang();
-//                Intent toHome = new Intent(PostActivity.this, HomeActivity.class);
-
-//                startActivity(toHome);
+                onBackPressed();
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
     }
 
     @Override
@@ -122,6 +128,7 @@ public class PostActivity extends AppCompatActivity {
         String desc = etDeskripsi.getText().toString();
 
         if (mImageUri != null) {
+            Toast.makeText(PostActivity.this, "Data sedang diproses, tunggu sebentar mungkin 2 menitan wkwk", Toast.LENGTH_SHORT).show();
             StorageReference storageRef = storage.getReference().child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
 //            db.collection("users").document(mUser).update("image", postBarang.getImage());
@@ -132,7 +139,6 @@ public class PostActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
                         throw task.getException();
                     }
-
                     return storageRef.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
