@@ -8,43 +8,68 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.newbie.handycraftsshop.Model.MapsModel;
 import com.newbie.handycraftsshop.Model.PostBarang;
 import com.newbie.handycraftsshop.R;
 import com.squareup.picasso.Picasso;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private Button btnPost;
+    private Button btnPost, btnBack;
     private EditText etDeskripsi, etHarga, etNamaBarang, etStockBarang;
     private static final String TAG = "PostActivity";
     private static final String KEY_DESKRIPSI = "deskripsi";
     private static final String KEY_HARGA = "harga";
     private static final String KEY_NAMA = "nama barang";
     public static final int PICK_IMAGE = 1;
-    private ImageView iv_sampah, btnBack;
+    private ImageView iv_sampah;
     private FirebaseAuth mAuth;
     private Uri mImageUri;
     private StorageReference mStorageReference;
     private FirebaseStorage storage;
     private DatabaseReference databaseReference;
     private PostBarang postBarang;
+    private MapView mapView;
+    private MapsModel mapsModel;
+    private GoogleMap gMap;
+    private double latit = 0.0;
+    private double longit = 0.0;
+    private int PLACE_PICKER_REQUEST = 1;
+    private MapsModel getMapsModel(){
+        return mapsModel;
+    }
+    private void setMapsModel(MapsModel mapsModel){
+        this.mapsModel = mapsModel;
+    }
 
     private FirebaseFirestore db;
     private String mUser;
@@ -53,7 +78,6 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
         mStorageReference = FirebaseStorage.getInstance().getReference("uploads");
@@ -62,13 +86,24 @@ public class PostActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         postBarang = new PostBarang();
 
+        mapsModel = new MapsModel();
+
+        mapView =(MapView) findViewById(R.id.mv_location);
+        if(mapView != null){
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
+
+
+
         etNamaBarang = findViewById(R.id.et_post_name);
         etHarga = findViewById(R.id.et_post_price);
         etStockBarang = findViewById(R.id.et_post_total_stock);
         etDeskripsi = findViewById(R.id.et_post_deskripsi);
         btnPost = findViewById(R.id.btn_postBarang);
-        btnBack = findViewById(R.id.btnBack);
         iv_sampah = findViewById(R.id.cv_post_item_photo);
+//        btnBack = findViewById(R.id.btnBack);
 
         iv_sampah.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,16 +117,63 @@ public class PostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tambahBarang();
                 onBackPressed();
+//                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+//                startActivityForResult(builder.build(PostActivity.this), PLACE_PICKER_REQUEST);
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null){
+            latit = bundle.getDouble("latitude");
+            longit = bundle.getDouble("longitude");
+        }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        mapView.onStart();
+    }
+
+    public void tambahBarang() {
+        String nama_barang = etNamaBarang.getText().toString();
+        String harga = etHarga.getText().toString();
+        String stock = etStockBarang.getText().toString();
+        String desc = etDeskripsi.getText().toString();
+
+        if (mImageUri != null) {
+            StorageReference storageRef = storage.getReference().child(System.currentTimeMillis()
+                    + "." + getFileExtension(mImageUri));
+//            db.collection("users").document(mUser).update("image", postBarang.getImage());
+            UploadTask uploadTask = storageRef.putFile(mImageUri);
+            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw task.getException();
+                    }
+
+                    return storageRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        postBarang.setImage(downloadUri.toString());
+                        PostBarang postBarang = new PostBarang(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), "");
+                        Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
+//                        db.collection("users").document(mUser).update("image", downloadUri.toString());
+                        if (postBarang.getImage() != null) {
+
+                        }else {
+
+                        }
+                        db.collection("users").document(mUser).collection("Data Post").document().set(postBarang);
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -121,45 +203,52 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    public void tambahBarang() {
-        String nama_barang = etNamaBarang.getText().toString();
-        String harga = etHarga.getText().toString();
-        String stock = etStockBarang.getText().toString();
-        String desc = etDeskripsi.getText().toString();
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
-        if (mImageUri != null) {
-            Toast.makeText(PostActivity.this, "Data sedang diproses, tunggu sebentar mungkin 2 menitan wkwk", Toast.LENGTH_SHORT).show();
-            StorageReference storageRef = storage.getReference().child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
-//            db.collection("users").document(mUser).update("image", postBarang.getImage());
-            UploadTask uploadTask = storageRef.putFile(mImageUri);
-            Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()){
-                        throw task.getException();
-                    }
-                    return storageRef.getDownloadUrl();
+        gMap = googleMap;
+        //Mendapatkan Dokumen
+        DocumentReference documentReference = db.collection("users").document(mUser).collection("location").document("toko");
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    double latitude = documentSnapshot.getDouble("latitude");
+                    double longitude = documentSnapshot.getDouble("longitude");
+                    moveCamera(new LatLng(latitude, longitude), 15f);
                 }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        postBarang.setImage(downloadUri.toString());
-                        PostBarang postBarang = new PostBarang(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), "");
-                        Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
-//                        db.collection("users").document(mUser).update("image", downloadUri.toString());
-                        if (postBarang.getImage() != null) {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-                        }else {
+            }
+        });
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                Intent toMaps = new Intent(PostActivity.this, Maps.class);
+                startActivity(toMaps);
+            }
+        });
+//        moveCamera(new LatLng(latit, longit), 15f);
+        gMap.setMyLocationEnabled(true);
 
-                        }
-                        db.collection("users").document(mUser).collection("Data Post").document().set(postBarang);
-                    }
-                }
-            });
-        }
     }
 
+    private void moveCamera(LatLng latLng, float zoom){
+        Log.d(TAG, "moveCamera: moving camera " + latLng.latitude + latLng.longitude);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        MarkerOptions options = new MarkerOptions().position(latLng);
+        gMap.addMarker(options);
+        hideSoftKeyboard();
+    }
+
+    private void hideSoftKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    private void loadMaps(){
+        DocumentReference documentReference = db.collection("users").document(mUser).collection("location").document("toko");
+    }
 }

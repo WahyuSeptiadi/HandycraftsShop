@@ -12,127 +12,120 @@
     'Copyright by Adrien on Pexels'
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/topBar"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:contentDescription="@string/todo"
-        android:padding="5dp"
-        android:src="@drawable/ic_back"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/activity_post_headtext"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="25sp" />
-
-    <ImageView
-        android:id="@+id/cv_post_item_photo"
-        android:layout_width="171dp"
-        android:layout_height="170dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="85dp"
-        android:layout_marginEnd="121dp"
-        android:contentDescription="@string/todo"
-        android:foregroundGravity="top"
-        android:padding="10dp"
-        android:src="@drawable/add_photo_icon"
-        android:layout_below="@+id/topBar"/>
-    'Copyright by Good Ware on FlatIcon'
-
+        tools:ignore="MissingConstraints"
+        >
+    </androidx.appcompat.widget.Toolbar>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/cv_post_item_photo">
+        android:layout_below="@id/topBar"
+        android:id="@+id/scrollView"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/cv_post_item_photo"
+                android:layout_width="171dp"
+                android:layout_height="170dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/todo"
+                android:foregroundGravity="top"
+                android:padding="10dp"
+                android:src="@drawable/add_photo_icon"
+                />
+            'Copyright by Good Ware on FlatIcon'
+
             <EditText
                 android:id="@+id/et_post_name"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:background="@drawable/background_edit_text"
                 android:hint="Nama Barang"
                 android:inputType="textEmailAddress"
-                android:padding="10dp"/>
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:layout_below="@+id/cv_post_item_photo"/>
 
             <EditText
                 android:id="@+id/et_post_price"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:background="@drawable/background_edit_text"
                 android:hint="Harga Barang"
                 android:inputType="number"
-                android:padding="10dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
                 android:layout_below="@+id/et_post_name"/>
 
-            <EditText
-                android:id="@+id/et_post_location"
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/background_edit_text"
-                android:hint="Location"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:layout_below="@+id/et_post_deskripsi"/>
+
 
             <EditText
                 android:id="@+id/et_post_deskripsi"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:background="@drawable/background_edit_text"
                 android:hint="Deskripsi Barang"
-                android:padding="10dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
                 android:layout_below="@+id/et_post_total_stock"/>
 
             <EditText
                 android:id="@+id/et_post_total_stock"
                 android:layout_width="292dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:background="@drawable/background_edit_text"
                 android:hint="Stok Barang"
                 android:inputType="number"
-                android:padding="10dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
                 android:layout_below="@+id/et_post_price"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mv_location"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/et_post_deskripsi"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                />
 
             <Button
                 android:id="@+id/btn_postBarang"
                 android:layout_width="310dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/et_post_location"
+                android:layout_below="@+id/mv_location"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/background_button"
                 android:text="@string/activity_post_posting"
@@ -140,7 +133,6 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
         </RelativeLayout>
-
     </ScrollView>
 
 </RelativeLayout>

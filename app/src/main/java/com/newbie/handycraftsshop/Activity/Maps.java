@@ -12,28 +12,168 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.newbie.handycraftsshop.Model.MapsModel;
 import com.newbie.handycraftsshop.R;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.newbie.handycraftsshop.Constant.ERROR_DIALOG_REQUEST;
 import static com.newbie.handycraftsshop.Constant.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 import static com.newbie.handycraftsshop.Constant.PERMISSIONS_REQUEST_ENABLE_GPS;
 
-public class Maps extends AppCompatActivity {
+public class Maps extends AppCompatActivity implements OnMapReadyCallback{
 
     private static final String TAG = "Maps Activity";
+    private static final float DEFAULT_ZOOM = 15f;
     private boolean mLocationPermissionGranted = false;
+    Button btn_confirm;
+    private MapView mv_maps_location;
+    private GoogleMap nMap;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private SearchView searchView;
+    private MapsModel mapsModel;
+    private ImageView iv_maps_mylocation;
+
+    //Firebase
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private String mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        searchView = findViewById(R.id.sv_location);
+        mapsModel = new MapsModel();
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        getLocationPermission();
+        init();
+
+        iv_maps_mylocation = findViewById(R.id.my_location);
+        btn_confirm = findViewById(R.id.btn_maps_confirm);
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLocationToFirestore();
+                Bundle maps = new Bundle();
+                maps.putDouble("latitude", mapsModel.getLatitude());
+                maps.putDouble("longitude", mapsModel.getLongitude());
+                Intent toPostAcitivty = new Intent(Maps.this, PostActivity.class);
+                toPostAcitivty.putExtras(maps);
+                startActivity(toPostAcitivty);
+
+            }
+        });
+
+        iv_maps_mylocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDeviceLocation();
+            }
+        });
+
+
+    }
+
+    private void setLocationToFirestore(){
+        mUser = mAuth.getCurrentUser().getUid();
+        Map<String, Object> data = new HashMap<>();
+        data.put("nama_kota", mapsModel.getNama());
+        data.put("latitude", mapsModel.getLatitude());
+        data.put("longitude", mapsModel.getLongitude());
+
+
+        db.collection("users").document(mUser).collection("location").document("toko").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.getResult().exists()){
+                    db.collection("users").document(mUser).collection("location").document("toko").update(data);
+                    Toast.makeText(Maps.this, "Memperbarui Lokasi", Toast.LENGTH_LONG).show();
+                }else {
+                    db.collection("users").document(mUser).collection("location").document("toko").set(data);
+                    Toast.makeText(Maps.this, "Data Lokasi Baru", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private void init(){
+        Log.d(TAG, "init: initializing");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                geoLocate();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+    }
+
+    private void geoLocate(){
+        String searchLocation = searchView.getQuery().toString();
+        Geocoder geocoder = new Geocoder(Maps.this);
+
+        List<Address> list = new ArrayList<>();
+        try {
+            list = geocoder.getFromLocationName(searchLocation, 1);
+        }catch (IOException e){
+            Log.e(TAG, "geoLocate: " + e.getMessage() );
+        }
+        if (list.size() > 0){
+            Address address = list.get(0);
+            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getLocality());
+            mapsModel.setNama(address.getLocality());
+            mapsModel.setLatitude(address.getLatitude());
+            mapsModel.setLongitude(address.getLongitude());
+        }else{
+            Log.d(TAG, "Kosong");
+        }
+    }
+
+    private void initMap(){
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(Maps.this);
     }
 
     @Override
@@ -86,6 +226,7 @@ public class Maps extends AppCompatActivity {
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
+            initMap();
         } else {
             ActivityCompat.requestPermissions(Maps.this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
@@ -129,6 +270,7 @@ public class Maps extends AppCompatActivity {
         }
         return false;
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -136,6 +278,7 @@ public class Maps extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_ENABLE_GPS: {
                 if(mLocationPermissionGranted){
+
                 }
                 else{
                     getLocationPermission();
@@ -143,5 +286,58 @@ public class Maps extends AppCompatActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Toast.makeText(this, "Maps is Ready", Toast.LENGTH_SHORT).show();
+        nMap = googleMap;
+
+        if (mLocationPermissionGranted){
+            getDeviceLocation();
+            nMap.setMyLocationEnabled(true);
+        }
+        init();
+    }
+    private void getDeviceLocation(){
+        Log.d(TAG, "getDeviceLocation: getting the device current location");
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try {
+            if(mLocationPermissionGranted){
+                Task loc = mFusedLocationProviderClient.getLastLocation();
+                loc.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()){
+                            Log.d(TAG, "onComplete: found location!");
+                            Location currentLocation = (Location) task.getResult();
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
+                        }else {
+                            Toast.makeText(Maps.this, "Tidak bisa mendapatkan current location", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+
+        }catch (SecurityException e){
+            Log.d(TAG, "getDeviceLocation: " + e.getMessage());
+        }
+    }
+
+    private void moveCamera(LatLng latLng, float zoom, String title){
+        Log.d(TAG, "moveCamera: moving camera " + latLng.latitude + latLng.longitude);
+        nMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        if (!title.equals("My Location")){
+            MarkerOptions options = new MarkerOptions().position(latLng).title(title);
+            nMap.addMarker(options);
+        }
+        hideSoftKeyboard();
+    }
+
+    private void hideSoftKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

@@ -2,18 +2,18 @@ package com.newbie.handycraftsshop.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Maps {
+public class MapsModel {
     @SerializedName("nama_kota")
     private String nama;
     @SerializedName("latitude")
-    private String latitude;
+    private double latitude;
     @SerializedName("longitude")
-    private String longitude;
+    private double longitude;
 
-    public Maps(){
+    public MapsModel(){
     }
 
-    public Maps(String nama, String latitude, String longitude) {
+    public MapsModel(String nama, double latitude, double longitude) {
         this.nama = nama;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -27,19 +27,19 @@ public class Maps {
         this.nama = nama;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }
