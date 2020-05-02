@@ -53,7 +53,8 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_home_sampah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_cardview_sampah"

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -102,6 +103,7 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
         iv_maps_mylocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(Maps.this, "Pencet", Toast.LENGTH_SHORT).show();
                 getDeviceLocation();
             }
         });
@@ -295,6 +297,11 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
 
         if (mLocationPermissionGranted){
             getDeviceLocation();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED){
+                return;
+            }
             nMap.setMyLocationEnabled(true);
         }
         init();

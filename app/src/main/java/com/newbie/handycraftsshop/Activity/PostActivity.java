@@ -38,7 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.newbie.handycraftsshop.Model.MapsModel;
-import com.newbie.handycraftsshop.Model.PostBarang;
+import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 import com.squareup.picasso.Picasso;
 
@@ -54,10 +54,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ImageView iv_sampah;
     private FirebaseAuth mAuth;
     private Uri mImageUri;
-    private StorageReference mStorageReference;
     private FirebaseStorage storage;
-    private DatabaseReference databaseReference;
-    private PostBarang postBarang;
+    private SampahModel postBarang;
     private MapView mapView;
     private MapsModel mapsModel;
     private GoogleMap gMap;
@@ -80,11 +78,9 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_post);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
-        mStorageReference = FirebaseStorage.getInstance().getReference("uploads");
-        databaseReference = FirebaseDatabase.getInstance().getReference("uploads");
         storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
-        postBarang = new PostBarang();
+        postBarang = new SampahModel();
 
         mapsModel = new MapsModel();
 
@@ -161,7 +157,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         postBarang.setImage(downloadUri.toString());
-                        PostBarang postBarang = new PostBarang(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), "");
+                        SampahModel postBarang = new SampahModel(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString());
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
 //                        db.collection("users").document(mUser).update("image", downloadUri.toString());
                         if (postBarang.getImage() != null) {
@@ -170,6 +166,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         }
                         db.collection("users").document(mUser).collection("Data Post").document().set(postBarang);
+                        db.collection("Data Postingan").document().set(postBarang);
                     }
                 }
             });
@@ -231,8 +228,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(toMaps);
             }
         });
-//        moveCamera(new LatLng(latit, longit), 15f);
-        gMap.setMyLocationEnabled(true);
+        moveCamera(new LatLng(latit, longit), 15f);
+//        gMap.setMyLocationEnabled(true);
 
     }
 

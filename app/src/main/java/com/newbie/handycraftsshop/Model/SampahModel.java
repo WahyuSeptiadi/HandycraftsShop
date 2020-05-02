@@ -2,7 +2,7 @@ package com.newbie.handycraftsshop.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostBarang {
+public class SampahModel {
     @SerializedName("nama")
     private String nama;
     @SerializedName("harga")
@@ -13,19 +13,16 @@ public class PostBarang {
     private String deskripsi;
     @SerializedName("image")
     private String image;
-    @SerializedName("location")
-    private String location;
 
-    public PostBarang(){
+    public SampahModel(){
     }
 
-    public PostBarang(String nama, int harga, int stockbarang, String deskripsi, String image, String location) {
+    public SampahModel(String nama, int harga, int stockbarang, String deskripsi, String image) {
         this.nama = nama;
         this.harga = harga;
         this.stockbarang = stockbarang;
         this.deskripsi = deskripsi;
         this.image = image;
-        this.location = location;
     }
 
     public String getNama() {
