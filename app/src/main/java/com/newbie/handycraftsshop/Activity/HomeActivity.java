@@ -67,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
         sampahModel = new SampahModel();
+
         //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("Login");

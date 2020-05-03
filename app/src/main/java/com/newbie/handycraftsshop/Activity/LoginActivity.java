@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser firebaseUser;
 
+    ProgressDialog pd;
+
     /*
     @Override
     protected void onStart() {
@@ -81,6 +83,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Intent toHome = new Intent(LoginActivity.this, HomeActivity.class);
                 //startActivity(toHome);
+
+                pd = new ProgressDialog(LoginActivity.this);
+                pd.setMessage("Please wait.. ");
+                pd.show();
 
                 String txt_email = etEmail.getText().toString();
                 String txt_password = etPassword.getText().toString();
