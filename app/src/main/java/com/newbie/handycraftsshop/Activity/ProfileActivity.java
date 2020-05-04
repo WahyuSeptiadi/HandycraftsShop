@@ -42,8 +42,8 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         btn_back = findViewById(R.id.btn_profile_back);
-        nama_profile_User = findViewById(R.id.tv_profile_nama_user);
-        profileUser = findViewById(R.id.profileUser);
+        nama_profile_User = findViewById(R.id.tv_NamaProfile);
+        profileUser = findViewById(R.id.civ_ImageProfile);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,16 +13,22 @@ public class SampahModel {
     private String deskripsi;
     @SerializedName("image")
     private String image;
+    @SerializedName("imagepublisher")
+    private String imagepublisher;
+    @SerializedName("usernamepublisher")
+    private String usernamepublisher;
 
     public SampahModel(){
     }
 
-    public SampahModel(String nama, int harga, int stockbarang, String deskripsi, String image) {
+    public SampahModel(String nama, int harga, int stockbarang, String deskripsi, String image, String imagepublisher, String usernamepublisher) {
         this.nama = nama;
         this.harga = harga;
         this.stockbarang = stockbarang;
         this.deskripsi = deskripsi;
         this.image = image;
+        this.imagepublisher = imagepublisher;
+        this.usernamepublisher = usernamepublisher;
     }
 
     public String getNama() {
@@ -63,5 +69,21 @@ public class SampahModel {
 
     public void setStockbarang(int stockbarang) {
         this.stockbarang = stockbarang;
+    }
+
+    public String getImagepublisher() {
+        return imagepublisher;
+    }
+
+    public void setImagepublisher(String imagepublisher) {
+        this.imagepublisher = imagepublisher;
+    }
+
+    public String getUsernamepublisher() {
+        return usernamepublisher;
+    }
+
+    public void setUsernamepublisher(String usernamepublisher) {
+        this.usernamepublisher = usernamepublisher;
     }
 }

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -30,8 +31,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,8 +45,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.newbie.handycraftsshop.Model.MapsModel;
 import com.newbie.handycraftsshop.Model.SampahModel;
+import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -60,6 +65,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SampahModel postBarang;
     private MapView mapView;
     private MapsModel mapsModel;
+    private User user;
     private GoogleMap gMap;
     private double latit = 0.0;
     private double longit = 0.0;
@@ -73,6 +79,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private FirebaseFirestore db;
     private String mUser;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +90,13 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         mUser = mAuth.getCurrentUser().getUid();
         storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
-        postBarang = new SampahModel();
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+
+        postBarang = new SampahModel();
         mapsModel = new MapsModel();
+        user = new User();
 
         mapView =(MapView) findViewById(R.id.mv_location);
         if(mapView != null){
@@ -92,6 +104,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapView.onResume();
             mapView.getMapAsync(this);
         }
+        getUsernameImageData();
 
 
 
@@ -166,7 +179,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         postBarang.setImage(downloadUri.toString());
-                        SampahModel postBarang = new SampahModel(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString());
+                        SampahModel postBarang = new SampahModel(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername());
 
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
 
@@ -197,6 +210,20 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         }else{
             Toast.makeText(this, "No Image Selected !", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getUsernameImageData(){
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

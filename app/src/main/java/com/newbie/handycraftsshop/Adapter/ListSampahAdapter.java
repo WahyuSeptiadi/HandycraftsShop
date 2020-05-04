@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.ListViewHolder> {
 
     private Context mContext;
@@ -39,9 +41,13 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
         holder.tv_namaBarang.setText(listSampah.get(position).getNama());
+        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
         Glide.with(mContext)
              .load(listSampah.get(position).getImage())
              .into(holder.imgsampah_home);
+        Glide.with(mContext)
+                .load(listSampah.get(position).getImagepublisher())
+                .into(holder.civ_imgpublisher);
 
 //        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
 //        Log.d("Image", listSampah.get(position).getImage());
@@ -69,14 +75,18 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
         ImageView imgsampah_home, imgfavorite_home;
+        CircleImageView civ_imgpublisher;
         Button btn_beli;
-        TextView tv_namaBarang;
+        TextView tv_namaBarang, tv_usernamepublisher;
         public ListViewHolder(View itemView) {
             super(itemView);
             imgsampah_home = itemView.findViewById(R.id.imgSampahPost);
             imgfavorite_home = itemView.findViewById(R.id.img_favorite_home);
             btn_beli = itemView.findViewById(R.id.btn_beli_home);
             tv_namaBarang = itemView.findViewById(R.id.tv_nama_barang);
+            civ_imgpublisher = itemView.findViewById(R.id.civ_imagePublisher);
+            tv_usernamepublisher = itemView.findViewById(R.id.tv_usernamepostinganHome);
+
         }
     }
 

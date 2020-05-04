@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".Activity.HomeActivity">
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topBar"
         android:layout_width="match_parent"
