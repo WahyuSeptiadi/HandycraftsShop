@@ -44,14 +44,17 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:id="@+id/profileUser"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:padding="5dp"
                 android:src="@drawable/ic_person_black">
             </de.hdodenhof.circleimageview.CircleImageView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:orientation="vertical"
                 android:layout_weight="2">
 
@@ -60,8 +63,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1.5"
-                    android:gravity="center"
+                    android:gravity="start|center_vertical"
                     android:text="INI NAMA PROFILE"
+                    android:textSize="25dp"
                     android:textColor="@color/hitam" />
 
                 <LinearLayout
@@ -74,24 +78,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Following"
+                        android:text="Saldo : "
+                        android:textSize="20sp"
                         android:textColor="@color/hitam"
-                        android:gravity="center" />
+                        android:gravity="start|center_vertical" />
 
                     <TextView
+                        android:id="@+id/sisaSaldo"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Followers"
+                        android:paddingEnd="46dp"
+                        android:textSize="20sp"
+                        android:text="13.000.000"
                         android:textColor="@color/hitam"
-                        android:gravity="center" />
+                        android:gravity="start|center_vertical" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/ll_profile"
+            android:background="#000"/>
     </RelativeLayout>
 
 

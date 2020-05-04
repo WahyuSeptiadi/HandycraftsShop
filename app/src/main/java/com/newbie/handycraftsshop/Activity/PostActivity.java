@@ -197,10 +197,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             mImageUri = result.getUri();
 
             iv_sampah.setImageURI(mImageUri);
-//            mImageUri = data.getData();
-//            Picasso.get().load(mImageUri).into(iv_sampah);
-//            insertImage(mImageUri);
-//            Picasso.with(this).load(mImageUri).into(iv_sampah);
         }else{
             Toast.makeText(this, "Ada yang gak beres nih :(", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(PostActivity.this, HomeActivity.class));

@@ -126,7 +126,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getDataFromFirestore();
+//        getDataFromFirestore();
     }
 
     private void getDataFromFirestore(){
@@ -137,7 +137,7 @@ public class HomeActivity extends AppCompatActivity {
                     sampahModel = documentSnapshot.toObject(SampahModel.class);
                     downModelArrayList.add(sampahModel);
                 }
-                myAdapter= new ListSampahAdapter(HomeActivity.this,downModelArrayList);
+                myAdapter= new ListSampahAdapter(HomeActivity.this, downModelArrayList);
                 recyclerView.setAdapter(myAdapter);
             }
         });

@@ -103,8 +103,10 @@ public class LoginActivity extends AppCompatActivity {
                                         toHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(toHome);
                                         finish();
+                                        pd.dismiss();
                                     } else{
                                         Toast.makeText(LoginActivity.this, "Authentification failed!", Toast.LENGTH_SHORT).show();
+                                        pd.dismiss();
                                     }
                                 }
                             });

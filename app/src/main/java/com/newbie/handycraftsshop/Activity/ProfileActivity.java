@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,8 +23,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
     private ImageView btn_back;
+    private CircleImageView profileUser;
     private TextView nama_profile_User;
     FirebaseUser firebaseUser;
     DatabaseReference reference;
@@ -39,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.btn_profile_back);
         nama_profile_User = findViewById(R.id.tv_profile_nama_user);
+        profileUser = findViewById(R.id.profileUser);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 nama_profile_User.setText(user.getUsername());
+                Glide.with(ProfileActivity.this).load(user.getImageUrl()).into(profileUser);
             }
 
             @Override

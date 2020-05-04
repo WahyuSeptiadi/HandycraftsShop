@@ -39,7 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
                 .withFullScreen()
                 .withTargetActivity(LoginActivity.class)
-                .withSplashTimeOut(3000)
+                .withSplashTimeOut(1000)
                 .withBackgroundColor(Color.parseColor("#1a1b29"))
                 .withFooterText("CopyRight 2020")
                 .withAfterLogoText("HandyCraft Shop")

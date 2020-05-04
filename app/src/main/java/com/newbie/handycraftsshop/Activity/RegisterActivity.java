@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth auth;
     DatabaseReference references;
 
+    ProgressDialog pd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pd = new ProgressDialog(RegisterActivity.this);
+                pd.setMessage("Please wait.. ");
+                pd.show();
+
                 String txt_username = re_username.getText().toString();
                 String txt_email = re_email.getText().toString();
                 String txt_password = re_password.getText().toString();
@@ -71,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "password and re-password is not match", Toast.LENGTH_SHORT).show();
                 } else{
                     register(txt_username, txt_email, txt_password);
+                    pd.dismiss();
                 }
             }
         });
@@ -120,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                             });
                         } else{
                             Toast.makeText(RegisterActivity.this, "Register Anda Gagal!", Toast.LENGTH_SHORT).show();
+                            pd.dismiss();
                         }
                     }
                 });
