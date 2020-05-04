@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -81,6 +80,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String mUser;
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +179,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         postBarang.setImage(downloadUri.toString());
-                        SampahModel postBarang = new SampahModel(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername());
+                        SampahModel postBarang = new SampahModel(user.getId(), nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername());
 
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
 
@@ -240,7 +240,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             mImageUri = result.getUri();
-
             iv_sampah.setImageURI(mImageUri);
         }else{
             Toast.makeText(this, "Ada yang gak beres nih :(", Toast.LENGTH_SHORT).show();

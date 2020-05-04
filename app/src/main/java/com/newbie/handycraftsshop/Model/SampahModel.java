@@ -3,6 +3,8 @@ package com.newbie.handycraftsshop.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class SampahModel {
+    @SerializedName("userID")
+    private String userID;
     @SerializedName("nama")
     private String nama;
     @SerializedName("harga")
@@ -21,7 +23,8 @@ public class SampahModel {
     public SampahModel(){
     }
 
-    public SampahModel(String nama, int harga, int stockbarang, String deskripsi, String image, String imagepublisher, String usernamepublisher) {
+    public SampahModel(String userID, String nama, int harga, int stockbarang, String deskripsi, String image, String imagepublisher, String usernamepublisher) {
+        this.userID = userID;
         this.nama = nama;
         this.harga = harga;
         this.stockbarang = stockbarang;
@@ -85,5 +88,13 @@ public class SampahModel {
 
     public void setUsernamepublisher(String usernamepublisher) {
         this.usernamepublisher = usernamepublisher;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

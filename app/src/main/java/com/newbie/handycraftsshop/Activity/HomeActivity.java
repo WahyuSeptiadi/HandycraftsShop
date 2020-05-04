@@ -50,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private SampahModel sampahModel;
     private ListSampahAdapter myAdapter;
+    private List<String> listDoc;
     ArrayList<SampahModel> downModelArrayList = new ArrayList<>();
 
     FirebaseUser firebaseUser;
@@ -133,7 +134,9 @@ public class HomeActivity extends AppCompatActivity {
         db.collection("Data Postingan").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                listDoc = new ArrayList<>();
                 for (DocumentSnapshot documentSnapshot: task.getResult()){
+//                    listDoc.add(documentSnapshot.getId());
                     sampahModel = documentSnapshot.toObject(SampahModel.class);
                     downModelArrayList.add(sampahModel);
                 }
@@ -142,5 +145,19 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+//    private void getDataFromFirestore(){
+//        db.collection("Data Postingan").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                for (DocumentSnapshot documentSnapshot: task.getResult()){
+//                    sampahModel = documentSnapshot.toObject(SampahModel.class);
+//                    downModelArrayList.add(sampahModel);
+//                }
+//                myAdapter= new ListSampahAdapter(HomeActivity.this, downModelArrayList);
+//                recyclerView.setAdapter(myAdapter);
+//            }
+//        });
+//    }
 
 }
