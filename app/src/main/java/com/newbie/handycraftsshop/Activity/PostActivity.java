@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +42,7 @@ import com.newbie.handycraftsshop.Model.MapsModel;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -104,7 +106,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         iv_sampah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pickFromGallery();
+//                pickFromGallery();
+                CropImage.activity().setAspectRatio(1,1).start(PostActivity.this);
             }
         });
 
@@ -137,9 +140,14 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         String stock = etStockBarang.getText().toString();
         String desc = etDeskripsi.getText().toString();
 
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Posting. .");
+        pd.show();
+
         if (mImageUri != null) {
             StorageReference storageRef = storage.getReference().child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
+
 //            db.collection("users").document(mUser).update("image", postBarang.getImage());
             UploadTask uploadTask = storageRef.putFile(mImageUri);
             Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -177,28 +185,41 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            mImageUri = data.getData();
-            Picasso.get().load(mImageUri).into(iv_sampah);
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//            mImageUri = data.getData();
+//            Picasso.get().load(mImageUri).into(iv_sampah);
 //            insertImage(mImageUri);
 //            Picasso.with(this).load(mImageUri).into(iv_sampah);
+//        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            mImageUri = result.getUri();
+
+            iv_sampah.setImageURI(mImageUri);
+//            mImageUri = data.getData();
+//            Picasso.get().load(mImageUri).into(iv_sampah);
+//            insertImage(mImageUri);
+//            Picasso.with(this).load(mImageUri).into(iv_sampah);
+        }else{
+            Toast.makeText(this, "Ada yang gak beres nih :(", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(PostActivity.this, HomeActivity.class));
+            finish();
         }
     }
 
-    public void pickFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent.createChooser(intent, "pilih gambar"), PICK_IMAGE);
-    }
-
+//    public void pickFromGallery() {
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(intent.createChooser(intent, "pilih gambar"), PICK_IMAGE);
+//    }
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
