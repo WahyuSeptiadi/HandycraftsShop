@@ -43,6 +43,7 @@
             >
 
             <ImageView
+                android:id="@+id/imgSampahPost"
                 android:layout_width="360dp"
                 android:layout_height="360dp"
                 android:layout_gravity="center"

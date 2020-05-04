@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.newbie.handycraftsshop.Activity.BuyActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
@@ -37,6 +38,14 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
 
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
+        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
+        Glide.with(mContext)
+             .load(listSampah.get(position).getImage())
+             .into(holder.imgsampah_home);
+
+//        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
+//        Log.d("Image", listSampah.get(position).getImage());
+
         holder.btn_beli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,9 +53,7 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
                 mContext.startActivity(toBuy);
             }
         });
-        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-//        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
-        Log.d("Image", listSampah.get(position).getImage());
+
         holder.imgfavorite_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +73,7 @@ public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.Li
         TextView tv_namaBarang;
         public ListViewHolder(View itemView) {
             super(itemView);
-            imgsampah_home = itemView.findViewById(R.id.img_sampah);
+            imgsampah_home = itemView.findViewById(R.id.imgSampahPost);
             imgfavorite_home = itemView.findViewById(R.id.img_favorite_home);
             btn_beli = itemView.findViewById(R.id.btn_beli_home);
             tv_namaBarang = itemView.findViewById(R.id.tv_nama_barang);

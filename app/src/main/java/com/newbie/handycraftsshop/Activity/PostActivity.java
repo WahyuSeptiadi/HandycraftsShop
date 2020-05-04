@@ -145,8 +145,9 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         pd.show();
 
         if (mImageUri != null) {
-            StorageReference storageRef = storage.getReference().child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
+            StorageReference storageRef = storage.getReference()
+                    .child(System.currentTimeMillis()
+                    + ".jpg");
 
 //            db.collection("users").document(mUser).update("image", postBarang.getImage());
             UploadTask uploadTask = storageRef.putFile(mImageUri);
@@ -166,18 +167,35 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Uri downloadUri = task.getResult();
                         postBarang.setImage(downloadUri.toString());
                         SampahModel postBarang = new SampahModel(nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString());
+
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
-//                        db.collection("users").document(mUser).update("image", downloadUri.toString());
+
+                        //                        db.collection("users").document(mUser).update("image", downloadUri.toString());
+
                         if (postBarang.getImage() != null) {
 
                         }else {
 
                         }
-                        db.collection("users").document(mUser).collection("Data Post").document().set(postBarang);
+
+                        db.collection("users").document(mUser)
+                                .collection("Data Post")
+                                .document().set(postBarang);
+
                         db.collection("Data Postingan").document().set(postBarang);
+
+                    }else{
+                        Toast.makeText(PostActivity.this, "Failed Posting", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(PostActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             });
+        }else{
+            Toast.makeText(this, "No Image Selected !", Toast.LENGTH_SHORT).show();
         }
     }
 
