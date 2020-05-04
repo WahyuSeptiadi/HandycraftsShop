@@ -3,30 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_gravity="center"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="10dp"
         >
+        <LinearLayout
+            android:id="@+id/publisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePublisher"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_person_black"
+                android:layout_above="@+id/fl_image"/>
 
+            <TextView
+                android:id="@+id/usernameHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"
+                android:layout_marginStart="5dp"
+                android:textColor="#000"/>
+        </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/fl_image"
+            android:layout_below="@+id/publisher"
             >
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_width="360dp"
+                android:layout_height="360dp"
+                android:layout_gravity="center"
                 android:adjustViewBounds="true"
+                android:layout_marginBottom="5dp"
                 android:scaleType="fitXY"
                 android:src="@color/cardview_dark_background" />
 

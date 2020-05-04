@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_gravity="center"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_margin="10dp"
         >
 
         <ImageView
             android:id="@+id/img_sampah"
             android:src="@color/cardview_dark_background"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_width="360dp"
+            android:layout_height="360dp"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:layout_marginBottom="10dp"
             />
@@ -29,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/img_sampah"
+            android:padding="10dp"
             android:orientation="horizontal"
             android:weightSum="3">
             <ImageView

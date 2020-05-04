@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -101,14 +102,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 namaUser.setText(user.getUsername());
-                /*
-                if (user.getImageUrl().equals("default")){
-                    ppUser.setImageResource(R.mipmap.ic_launcher);
-                }else{
-                    Glide.with(HomeActivity.this).load(user.getImageUrl()).into(ppUser);
-                }
-                
-                 */
+                Glide.with(HomeActivity.this).load(user.getImageUrl()).into(ppUser);
             }
 
             @Override
