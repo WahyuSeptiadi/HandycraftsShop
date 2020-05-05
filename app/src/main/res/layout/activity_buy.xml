@@ -35,94 +35,142 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/background_item"
-        android:padding="18dp"
-        android:layout_margin="28dp"
+        android:padding="10dp"
+        android:layout_margin="10dp"
         android:layout_below="@+id/topBar">
 
-        <ImageView
-            android:id="@+id/fotoHandcraft"
-            android:layout_width="310dp"
-            android:layout_height="200dp"
-            android:background="@color/cardview_dark_background"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="18dp"
-            android:contentDescription="@string/todo" />
-
-        <LinearLayout
-            android:id="@+id/titleTv"
+        <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="3dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="0dp"
-            android:layout_below="@+id/fotoHandcraft">
-            <ImageView
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/valueBuy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_price"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/ic_stock"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/ic_location"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/ic_deskrips"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:layout_below="@+id/fotoHandcraft">
+                <ImageView
+                    android:id="@+id/fotoHandcraft"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
+                    android:background="@color/cardview_dark_background"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="18dp"
+                    android:contentDescription="@string/todo" />
+                <ImageView
+                    android:id="@+id/ic_priceBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/fotoHandcraft"
+                    android:layout_marginTop="2.5dp"
+                    android:src="@drawable/ic_price" />
+                <ImageView
+                    android:id="@+id/ic_stockBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ic_priceBuy"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/ic_stock"/>
+                <ImageView
+                    android:id="@+id/ic_locationBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ic_stockBuy"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/ic_location"/>
+                <ImageView
+                    android:id="@+id/ic_deskripsiBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ic_locationBuy"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/ic_deskrips"/>
+                <TextView
+                    android:id="@+id/tv_priceBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ic_priceBuy"
+                    android:layout_below="@id/fotoHandcraft"
+                    android:text="16.000"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000" />
+                <TextView
+                    android:id="@+id/tv_stockBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_priceBuy"
+                    android:layout_toRightOf="@+id/ic_stockBuy"
+                    android:text="@string/value_stock"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#000" />
+                <TextView
+                    android:id="@+id/tv_locationBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_stockBuy"
+                    android:layout_toRightOf="@+id/ic_locationBuy"
+                    android:text="Magetan"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20sp"
+                    android:textColor="#000" />
+                <TextView
+                    android:id="@+id/tv_deskripsiBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_locationBuy"
+                    android:layout_toRightOf="@+id/ic_deskripsiBuy"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Terbuat dari tembaga dan alumunium yang terbaik."
+                    android:textSize="16dp"
+                    android:textColor="#000" />
+                <TextView
+                    android:id="@+id/tv_totalBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Beli : "
+                    android:layout_below="@+id/tv_deskripsiBuy"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="33dp"
+                    android:textColor="#000"
+                    android:textSize="16dp"/>
 
-        <LinearLayout
-            android:id="@+id/valueBuy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="9dp"
-            android:paddingEnd="30dp"
-            android:layout_below="@+id/fotoHandcraft"
-            android:layout_toEndOf="@id/titleTv">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rp_16_000"
-                android:textSize="20sp"
-                android:textColor="#000" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/value_stock"
-                android:textSize="20sp"
-                android:textColor="#000" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Magetan"
-                android:textSize="20sp"
-                android:textColor="#000" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Terbuat dari tembaga dan alumunium yang terbaik."
-                android:textSize="16dp"
-                android:textColor="#000" />
-        </LinearLayout>
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv_deskripsiBuy"
+                    android:layout_toRightOf="@+id/tv_totalBuy">
+                    <TextView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/background_edit_text"/>
+                    <EditText
+                        android:id="@+id/totalBeli"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="17dp"
+                        android:layout_marginLeft="5dp"
+                        android:inputType="number"
+                        android:hint="n"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_buy"
-            android:layout_below="@+id/valueBuy"
-            android:background="@drawable/background_button"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:layout_marginTop="18dp"/>
+                <Button
+                    android:id="@+id/btn_beli_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_buy"
+                    android:layout_below="@+id/tv_deskripsiBuy"
+                    android:background="@drawable/background_button"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"/>
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
 
 </RelativeLayout>

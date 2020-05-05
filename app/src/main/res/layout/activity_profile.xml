@@ -51,51 +51,42 @@
                 android:src="@drawable/ic_person_black">
             </de.hdodenhof.circleimageview.CircleImageView>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_marginStart="5dp">
 
                 <TextView
                     android:id="@+id/tv_NamaProfile"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.5"
-                    android:gravity="start|center_vertical"
+                    android:layout_height="wrap_content"
                     android:text="INI NAMA PROFILE"
                     android:textSize="25dp"
+                    android:layout_marginTop="17dp"
                     android:textColor="@color/hitam" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="2">
+                <TextView
+                    android:id="@+id/TEXTSaldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_NamaProfile"
+                    android:text="Saldo : "
+                    android:textSize="20sp"
+                    android:textColor="@color/hitam"
+                    android:gravity="start|center_vertical" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="Saldo : "
-                        android:textSize="20sp"
-                        android:textColor="@color/hitam"
-                        android:gravity="start|center_vertical" />
+                <TextView
+                    android:id="@+id/sisaSaldo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_NamaProfile"
+                    android:layout_toRightOf="@+id/TEXTSaldo"
+                    android:paddingEnd="46dp"
+                    android:textSize="20sp"
+                    android:text="13.000.000"
+                    android:textColor="@color/hitam" />
 
-                    <TextView
-                        android:id="@+id/sisaSaldo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingEnd="46dp"
-                        android:textSize="20sp"
-                        android:text="13.000.000"
-                        android:textColor="@color/hitam"
-                        android:gravity="start|center_vertical" />
-
-                </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
 
         <TextView
@@ -105,63 +96,13 @@
             android:background="#000"/>
     </RelativeLayout>
 
-
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/rl_profile"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/topBar">-->
-
-<!--        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--            android:id="@+id/iv_profile"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="70dp"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:src="@drawable/ic_person_black" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_nama"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Nama"-->
-<!--            android:textColor="@color/hitam"-->
-<!--            android:layout_toRightOf="@id/iv_profile" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_following"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Following"-->
-<!--            android:textColor="@color/hitam"-->
-<!--            android:layout_toRightOf="@id/iv_profile"-->
-<!--            android:layout_below="@id/tv_nama" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_followers"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Followers"-->
-<!--            android:textColor="@color/hitam"-->
-<!--            android:layout_toRightOf="@id/iv_profile"-->
-<!--            android:layout_below="@id/tv_following" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_saldo"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Saldo"-->
-<!--            android:textColor="@color/hitam"-->
-<!--            android:layout_below="@id/iv_profile" />-->
-
-<!--    </RelativeLayout>-->
-
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/rl_profile">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_profile_sampah"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_cardview_sampah_profile">

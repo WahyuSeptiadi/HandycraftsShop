@@ -2,7 +2,6 @@ package com.newbie.handycraftsshop.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +15,23 @@ import com.bumptech.glide.Glide;
 import com.newbie.handycraftsshop.Activity.BuyActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListSampahAdapter extends RecyclerView.Adapter<ListSampahAdapter.ListViewHolder> {
+public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapter.ListViewHolder> {
 
     private Context mContext;
     private ArrayList<SampahModel> listSampah;
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview_sampah, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview_sampah_home, parent, false);
         return new ListViewHolder(view);
     }
 
-    public ListSampahAdapter(Context mContext, ArrayList<SampahModel> listSampah) {
+    public ListPostHomeAdapter(Context mContext, ArrayList<SampahModel> listSampah) {
         this.mContext = mContext;
         this.listSampah = listSampah;
     }

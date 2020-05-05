@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.newbie.handycraftsshop.Adapter.ListSampahAdapter;
+import com.newbie.handycraftsshop.Adapter.ListPostHomeAdapter;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
@@ -49,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private SampahModel sampahModel;
-    private ListSampahAdapter myAdapter;
+    private ListPostHomeAdapter myAdapter;
     private List<String> listDoc;
     ArrayList<SampahModel> downModelArrayList = new ArrayList<>();
 
@@ -140,7 +139,7 @@ public class HomeActivity extends AppCompatActivity {
                     sampahModel = documentSnapshot.toObject(SampahModel.class);
                     downModelArrayList.add(sampahModel);
                 }
-                myAdapter= new ListSampahAdapter(HomeActivity.this, downModelArrayList);
+                myAdapter= new ListPostHomeAdapter(HomeActivity.this, downModelArrayList);
                 recyclerView.setAdapter(myAdapter);
             }
         });
@@ -154,7 +153,7 @@ public class HomeActivity extends AppCompatActivity {
 //                    sampahModel = documentSnapshot.toObject(SampahModel.class);
 //                    downModelArrayList.add(sampahModel);
 //                }
-//                myAdapter= new ListSampahAdapter(HomeActivity.this, downModelArrayList);
+//                myAdapter= new ListPostHomeAdapter(HomeActivity.this, downModelArrayList);
 //                recyclerView.setAdapter(myAdapter);
 //            }
 //        });

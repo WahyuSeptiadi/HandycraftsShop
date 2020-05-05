@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_sampah"
+                android:layout_below="@id/img_sampahProfile"
                 android:text="Buy"
                 android:textAllCaps="false"
                 android:background="@drawable/background_button"
