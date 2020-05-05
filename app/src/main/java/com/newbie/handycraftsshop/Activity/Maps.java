@@ -40,9 +40,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.newbie.handycraftsshop.Model.MapsModel;
+import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 
 import java.io.IOException;
@@ -72,6 +79,8 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private String mUser;
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +116,6 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
                 getDeviceLocation();
             }
         });
-
 
     }
 
@@ -304,32 +312,68 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
             }
             nMap.setMyLocationEnabled(true);
         }
+//https://www.youtube.com/watch?v=2ppri1ovIQA
+        nMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title(latLng.latitude+ " : " + latLng.longitude);
+                nMap.clear();
+                nMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        mapsModel.setNama(user.getUsername()+" Location");
+                        mapsModel.setLatitude(latLng.latitude);
+                        mapsModel.setLongitude(latLng.longitude);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+                nMap.addMarker(markerOptions);
+            }
+        });
+
         init();
     }
+
     private void getDeviceLocation(){
-        Log.d(TAG, "getDeviceLocation: getting the device current location");
+        Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        try {
+        try{
             if(mLocationPermissionGranted){
-                Task loc = mFusedLocationProviderClient.getLastLocation();
-                loc.addOnCompleteListener(new OnCompleteListener() {
+
+                final Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()){
+                        if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM, "My Location");
-                        }else {
-                            Toast.makeText(Maps.this, "Tidak bisa mendapatkan current location", Toast.LENGTH_SHORT).show();
+
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
+                                    DEFAULT_ZOOM,
+                                    "My Location");
+
+                        }else{
+                            Log.d(TAG, "onComplete: current location is null");
+                            Toast.makeText(Maps.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
-
         }catch (SecurityException e){
-            Log.d(TAG, "getDeviceLocation: " + e.getMessage());
+            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage() );
         }
     }
 
