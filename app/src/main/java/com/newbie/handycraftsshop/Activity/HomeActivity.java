@@ -120,13 +120,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        getDataFromFirestore();
+//        getDataFromFirestore();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        getDataFromFirestore();
+        getDataFromFirestore();
     }
 
     private void getDataFromFirestore(){
@@ -144,19 +144,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
-
-//    private void getDataFromFirestore(){
-//        db.collection("Data Postingan").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                for (DocumentSnapshot documentSnapshot: task.getResult()){
-//                    sampahModel = documentSnapshot.toObject(SampahModel.class);
-//                    downModelArrayList.add(sampahModel);
-//                }
-//                myAdapter= new ListPostHomeAdapter(HomeActivity.this, downModelArrayList);
-//                recyclerView.setAdapter(myAdapter);
-//            }
-//        });
-//    }
 
 }
