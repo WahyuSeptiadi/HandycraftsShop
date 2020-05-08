@@ -28,6 +28,7 @@
         <activity android:name=".Activity.PostActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Activity.WishlistActivity" />
         <activity android:name=".Activity.ProfileActivity" />
         <activity
             android:name=".Activity.RegisterActivity"

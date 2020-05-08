@@ -12,24 +12,23 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.newbie.handycraftsshop.Activity.BuyActivity;
-import com.newbie.handycraftsshop.Activity.WishlistActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.Wishlist;
 import com.newbie.handycraftsshop.R;
@@ -37,88 +36,46 @@ import com.newbie.handycraftsshop.R;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapter.ListViewHolder> {
-
-    private ArrayList<String> listOfWishlist = new ArrayList<>();
-    private Map<String, String> percobaan = new Hashtable<>();
+public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListViewHolder> {
+    private Context mContext;
     private ArrayList<SampahModel> listSampah;
-    private Map<String, SampahModel> data;
-    private ArrayList<Wishlist> wishlists;
-    private ArrayList<Wishlist> listWish;
-    private ArrayList<String> coba;
-    private DatabaseReference reff;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private Wishlist wishlist;
-    private Context mContext;
     private String mUser;
+    private Wishlist wishlist;
+    ArrayList<Wishlist> wishlists = new ArrayList<>();
 
+    @NonNull
     @Override
-    public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview_sampah_home, parent, false);
         return new ListViewHolder(view);
     }
 
-    public ListPostHomeAdapter(Context mContext, ArrayList<SampahModel> listSampah, Map<String, SampahModel> data, ArrayList<String> listOfWishlist) {
+    public WishlistAdapter(Context mContext, ArrayList<SampahModel> listSampah) {
         this.mContext = mContext;
         this.listSampah = listSampah;
-        this.data = data;
-        this.listOfWishlist = listOfWishlist;
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder holder, int position) {
-        coba = new ArrayList<>();
-        int count = 0;
+    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+
         db = FirebaseFirestore.getInstance();
-        for (Map.Entry<String, SampahModel> e : data.entrySet()) {
-            percobaan.put(e.getKey(), e.getValue().getImage());
-        }
-        for (String keyOnData : percobaan.keySet()) {
-            for (String keyOnWishlist : listOfWishlist) {
-                if (keyOnData.equals(keyOnWishlist)){
-                    if (percobaan.get(keyOnData).equals(listSampah.get(position).getImage())){
-                        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-                        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImage())
-                                .into(holder.imgsampah_home);
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImagepublisher())
-                                .into(holder.civ_imgpublisher);
-                        holder.img_wishlist.setChecked(true);
-                        coba.add(keyOnData);
-                        count+=1;
-                    }else {
-                        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-                        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImage())
-                                .into(holder.imgsampah_home);
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImagepublisher())
-                                .into(holder.civ_imgpublisher);
-                        holder.img_wishlist.setChecked(false);
-                    }
-                } else {
-                    holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-                    holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-                    Glide.with(mContext)
-                            .load(listSampah.get(position).getImage())
-                            .into(holder.imgsampah_home);
-                    Glide.with(mContext)
-                            .load(listSampah.get(position).getImagepublisher())
-                            .into(holder.civ_imgpublisher);
-                }
-            }
-        }
-        Toast.makeText(mContext, ""+count+" "+coba.toString(), Toast.LENGTH_LONG).show();
+        wishlist = new Wishlist();
+
+        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
+        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
+        Glide.with(mContext)
+                .load(listSampah.get(position).getImage())
+                .into(holder.imgsampah_home);
+        Glide.with(mContext)
+                .load(listSampah.get(position).getImagepublisher())
+                .into(holder.civ_imgpublisher);
+        holder.img_wishlist.setChecked(true);
 
 //        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
 //        Log.d("Image", listSampah.get(position).getImage());
@@ -134,13 +91,13 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         holder.img_wishlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wishlist = new Wishlist();
                 mAuth = FirebaseAuth.getInstance();
                 mUser = mAuth.getCurrentUser().getUid();
-                String nameOfPic = listSampah.get(holder.getAdapterPosition()).getImage();
-                DocumentReference docRefWishlist = db.collection("wishlist").document(mUser);
-                CollectionReference docRefDataPostWish = db.collection("Data Postingan");
                 Dictionary dictionary = new Hashtable();
+                String nameOfPic = listSampah.get(holder.getAdapterPosition()).getImage();
+                DocumentReference docRef = db.collection("wishlist").document(mUser);
+                CollectionReference docRefDataPostWish = db.collection("Data Postingan");
+                DocumentReference docRefWishlist = db.collection("wishlist").document(mUser);
 
                 if(holder.img_wishlist.isChecked()){
                     docRefDataPostWish.whereEqualTo("image", nameOfPic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -166,6 +123,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                                     docRefWishlist.set(dictionary, SetOptions.merge());
                                 }
                             }
+
                         }
                     });
                 }
@@ -195,5 +153,4 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
 
         }
     }
-
 }

@@ -48,6 +48,17 @@
                 android:src="@drawable/ic_chat_black_24dp"
                 android:contentDescription="@string/todo" />
 
+            <ImageView
+                android:id="@+id/imgCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:layout_toLeftOf="@id/imgChat"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_shopping_cart_black_24dp"
+                android:contentDescription="@string/todo" />
+
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
