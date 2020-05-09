@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     ProgressDialog pd;
 
-    String saldoAwal = "1.000.000";
+    int saldoAwal = 1000000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +107,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                             references = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-                            HashMap<String, String > hashMap = new HashMap<>();
+                            HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id",userid);
                             hashMap.put("username", username);
                             hashMap.put("imageUrl","https://firebasestorage.googleapis.com/v0/b/handycrafts-shop.appspot.com/o/default.png?alt=media&token=a721ee3d-b599-40fc-aab7-f58cadc15861");
-                            hashMap.put("saldo", saldoAwal);
+                            hashMap.put("saldo", String.valueOf(saldoAwal));
 
                             references.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

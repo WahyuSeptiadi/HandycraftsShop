@@ -62,12 +62,17 @@
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_home_sampah"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swapRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/item_cardview_sampah_home"
-        android:layout_below="@+id/topBar" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topBar">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_home_sampah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_cardview_sampah_home"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabPost"

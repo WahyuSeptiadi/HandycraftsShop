@@ -5,10 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     private SampahModel sampahModel;
+
     private ListPostHomeAdapter myAdapter;
     private List<String> listDoc;
     Map<String, SampahModel> dataku ;
@@ -69,23 +72,22 @@ public class HomeActivity extends AppCompatActivity {
     DatabaseReference reference;
     private String mUser;
 
+    private SwipeRefreshLayout sRefresh;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         recyclerView = findViewById(R.id.rv_home_sampah);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
         sampahModel = new SampahModel();
         dataku = new Hashtable<>();
-
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Login");
 
         ppUser = findViewById(R.id.imageprofile_home);
         namaUser = findViewById(R.id.tv_nameprofile_home);
@@ -93,7 +95,23 @@ public class HomeActivity extends AppCompatActivity {
         imgCart = findViewById(R.id.imgCart);
         fab = findViewById(R.id.fabPost);
 
+        sRefresh = findViewById(R.id.swapRefresh);
+
         getListOfWish();
+
+        sRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sRefresh.setRefreshing(false);
+                        myAdapter.notifyDataSetChanged();
+                        getDataFromFirestore();
+                    }
+                }, 1000);
+            }
+        });
 
         imgChat.setOnClickListener(new View.OnClickListener() {
             @Override
