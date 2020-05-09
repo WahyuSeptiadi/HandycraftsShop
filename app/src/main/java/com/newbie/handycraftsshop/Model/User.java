@@ -5,6 +5,7 @@ public class User {
     private String id;
     private String username;
     private String imageUrl;
+    private String saldo;
 
     public User(String id, String username, String imageUrl) {
         this.id = id;
@@ -14,6 +15,14 @@ public class User {
 
     public User() {
 
+    }
+
+    public String getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(String saldo) {
+        this.saldo = saldo;
     }
 
     public String getId() {

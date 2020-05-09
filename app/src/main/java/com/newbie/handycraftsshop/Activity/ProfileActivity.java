@@ -50,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView btn_back;
     private CircleImageView profileUser;
     private TextView nama_profile_User;
+    private TextView profil_saldo;
     private FirebaseUser firebaseUser;
     private DatabaseReference reference;
 
@@ -80,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_profile_back);
         nama_profile_User = findViewById(R.id.tv_NamaProfile);
         profileUser = findViewById(R.id.civ_ImageProfile);
+        profil_saldo = findViewById(R.id.sisaSaldo);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -114,6 +116,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 nama_profile_User.setText(user.getUsername());
+                profil_saldo.setText(user.getSaldo());
                 Glide.with(getApplicationContext()).load(user.getImageUrl()).into(profileUser);
             }
 
