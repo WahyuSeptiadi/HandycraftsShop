@@ -50,7 +50,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private Button btnPost, btnBack;
+    private Button btnPost;
+    private ImageView btnBack;
     private EditText etDeskripsi, etHarga, etNamaBarang, etStockBarang;
     private static final String TAG = "PostActivity";
     private static final String KEY_DESKRIPSI = "deskripsi";
@@ -104,9 +105,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapView.onResume();
             mapView.getMapAsync(this);
         }
+
         getUsernameImageData();
-
-
 
         etNamaBarang = findViewById(R.id.et_post_name);
         etHarga = findViewById(R.id.et_post_price);
@@ -114,7 +114,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         etDeskripsi = findViewById(R.id.et_post_deskripsi);
         btnPost = findViewById(R.id.btn_postBarang);
         iv_sampah = findViewById(R.id.cv_post_item_photo);
-//        btnBack = findViewById(R.id.btnBack);
+        btnBack = findViewById(R.id.btn_post_back);
 
         iv_sampah.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +131,13 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                 onBackPressed();
 //                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 //                startActivityForResult(builder.build(PostActivity.this), PLACE_PICKER_REQUEST);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 

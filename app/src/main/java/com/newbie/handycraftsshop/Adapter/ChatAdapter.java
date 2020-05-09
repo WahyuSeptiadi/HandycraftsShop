@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.newbie.handycraftsshop.Activity.ChatActivity;
@@ -27,6 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private Context mContext;
     private List<Chat> mChat;
+    private List<User> mUser;
     private String imageurl;
 
     FirebaseUser fuser;
@@ -47,24 +49,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             View view = LayoutInflater.from(mContext).inflate(R.layout.chat_item_left, parent,false);
             return new ChatAdapter.ViewHolder(view);
         }
-
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ViewHolder holder, int position) {
-
         Chat chat = mChat.get(position);
-
         holder.show_message.setText(chat.getMessage());
-        /*
-        if (user.getImageUrl().equals("default")){
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
-        }else{
-            Glide.with(mContext).load(user.getImageUrl()).into(holder.profile_image);
-        }
-         */
-
     }
 
     @Override
@@ -80,7 +70,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
             super(itemView);
 
             show_message = itemView.findViewById(R.id.show_message);
-            profile_image = itemView.findViewById(R.id.profile_daftar_chat);
+            profile_image = itemView.findViewById(R.id.profile_image_chat);
         }
     }
 

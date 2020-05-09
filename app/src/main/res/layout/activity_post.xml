@@ -22,6 +22,25 @@
         tools:ignore="MissingConstraints"
         >
     </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/btn_post_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_back"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="Post Item"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="18sp" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

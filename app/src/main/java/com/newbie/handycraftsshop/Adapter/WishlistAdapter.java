@@ -2,6 +2,7 @@ package com.newbie.handycraftsshop.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +83,28 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
         holder.btn_beli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toBuy = new Intent(mContext, BuyActivity.class);
-                mContext.startActivity(toBuy);
+                String nameOfpic = listSampah.get(holder.getAdapterPosition()).getImage();
+                CollectionReference docRefDataPost = db.collection("Data Postingan");
+                docRefDataPost.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (DocumentSnapshot documentSnapshot: task.getResult()){
+                                SampahModel sampahModel =  documentSnapshot.toObject(SampahModel.class);
+                                Intent toBuy = new Intent(mContext, BuyActivity.class);
+                                toBuy.putExtra("id_barang", documentSnapshot.getId());
+                                toBuy.putExtra("hargaBarang", sampahModel.getHarga());
+                                toBuy.putExtra("namaBarang", sampahModel.getNama());
+                                toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
+                                toBuy.putExtra("image", sampahModel.getImage());
+                                toBuy.putExtra("stock", sampahModel.getStockbarang());
+                                mContext.startActivity(toBuy);
+                                Log.d("CheckSampahModel",  sampahModel.getNama());
+                                Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
             }
         });
 
