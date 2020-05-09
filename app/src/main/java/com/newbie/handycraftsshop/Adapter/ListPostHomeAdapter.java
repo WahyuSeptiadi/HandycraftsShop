@@ -84,37 +84,6 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         for (Map.Entry<String, SampahModel> e : data.entrySet()) {
             percobaan.put(e.getKey(), e.getValue().getImage());
         }
-        for (String keyOnData : percobaan.keySet()) {
-            for (String keyOnWishlist : listOfWishlist) {
-                if (keyOnData.equals(keyOnWishlist)){
-                    if (percobaan.get(keyOnData).equals(listSampah.get(position).getImage())){
-                        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-                        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImage())
-                                .into(holder.imgsampah_home);
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImagepublisher())
-                                .into(holder.civ_imgpublisher);
-                        holder.img_wishlist.setChecked(true);
-                        coba.add(keyOnData);
-                        count+=1;
-                    }else {
-                        holder.tv_namaBarang.setText(listSampah.get(position).getNama());
-                        holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImage())
-                                .into(holder.imgsampah_home);
-                        Glide.with(mContext)
-                                .load(listSampah.get(position).getImagepublisher())
-                                .into(holder.civ_imgpublisher);
-                        holder.img_wishlist.setChecked(false);
-                    }
-                } else {
-
-                }
-            }
-        }
         holder.tv_namaBarang.setText(listSampah.get(position).getNama());
         holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
         Glide.with(mContext)
@@ -123,6 +92,21 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         Glide.with(mContext)
                 .load(listSampah.get(position).getImagepublisher())
                 .into(holder.civ_imgpublisher);
+        for (String keyOnData : percobaan.keySet()) {
+            for (String keyOnWishlist : listOfWishlist) {
+                if (keyOnData.equals(keyOnWishlist)){
+                    if (percobaan.get(keyOnData).equals(listSampah.get(position).getImage())){
+                        holder.img_wishlist.setChecked(true);
+                        coba.add(keyOnData);
+                        count+=1;
+                    }else {
+                        holder.img_wishlist.setChecked(false);
+                    }
+                } else {
+
+                }
+            }
+        }
 //        Toast.makeText(mContext, ""+count+" "+coba.toString(), Toast.LENGTH_LONG).show();
 
 //        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
@@ -140,6 +124,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                             for (DocumentSnapshot documentSnapshot: task.getResult()){
                                 SampahModel sampahModel =  documentSnapshot.toObject(SampahModel.class);
                                 Intent toBuy = new Intent(mContext, BuyActivity.class);
+                                toBuy.putExtra("id_barang", documentSnapshot.getId());
                                 toBuy.putExtra("hargaBarang", sampahModel.getHarga());
                                 toBuy.putExtra("namaBarang", sampahModel.getNama());
                                 toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());

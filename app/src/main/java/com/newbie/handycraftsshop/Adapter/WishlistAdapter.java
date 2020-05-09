@@ -41,13 +41,12 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListViewHolder> {
-    private Context mContext;
     private ArrayList<SampahModel> listSampah;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private String mUser;
     private Wishlist wishlist;
-    ArrayList<Wishlist> wishlists = new ArrayList<>();
+    private Context mContext;
+    private String mUser;
 
     @NonNull
     @Override
@@ -95,7 +94,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
                 mUser = mAuth.getCurrentUser().getUid();
                 Dictionary dictionary = new Hashtable();
                 String nameOfPic = listSampah.get(holder.getAdapterPosition()).getImage();
-                DocumentReference docRef = db.collection("wishlist").document(mUser);
                 CollectionReference docRefDataPostWish = db.collection("Data Postingan");
                 DocumentReference docRefWishlist = db.collection("wishlist").document(mUser);
 

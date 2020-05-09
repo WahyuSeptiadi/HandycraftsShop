@@ -22,6 +22,7 @@
     <string name="activity_post_map">Posisi Anda</string>
     <string name="activity_post_posting">Post Barang</string>
     <string name="activity_wishlist_main">Wishlist</string>
+    <string name="activity_history_main">History</string>
     <string name="google_map_api_key">AIzaSyBURYmKz8zSrfqhue4TugiSlF-bAuat8NQ</string>
 
     <!-- TODO: Remove or change this placeholder text -->

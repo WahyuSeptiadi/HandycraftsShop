@@ -1,5 +1,6 @@
 package com.newbie.handycraftsshop.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,12 +24,9 @@ import com.newbie.handycraftsshop.R;
 public class BuyActivity extends AppCompatActivity {
 
     private ImageView btnBack;
-    private String deskripsi;
-    private String namabarang;
-    private int hargabarang;
-    private String imageURL;
-    private int stock;
-    private TextView tv_deskripsi, tv_stock, tv_harga;
+    private String deskripsi, namabarang, imageURL, id_barang;
+    private int hargabarang, stock;
+    private TextView tv_deskripsi, tv_stock, tv_harga, nama_item;
     private ImageView img_sampah;
     private BuyModel buyModel;
     private Button btnBuy;
@@ -57,20 +57,39 @@ public class BuyActivity extends AppCompatActivity {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(BuyActivity.this, totBar, Toast.LENGTH_SHORT).show();
-                String deskripsi = tv_deskripsi.toString();
+                if (isEmpty(et_totalBeli)){
+                    Toast.makeText(BuyActivity.this, "Maaf tolong isikan banyaknya barang!", Toast.LENGTH_LONG).show();
+                }else {
+                    int totalYangDiBeli = Integer.parseInt(et_totalBeli.getText().toString());
+                    if(totalYangDiBeli==0){
+                        Toast.makeText(BuyActivity.this, "Total barang yang Anda beli tidak boleh 0!", Toast.LENGTH_LONG).show();
+                    }else if (totalYangDiBeli>stock){
+                        Toast.makeText(BuyActivity.this, "Total barang yang Anda beli melebihi stok kami", Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(BuyActivity.this, totBar, Toast.LENGTH_SHORT).show();
+                        String idBarang = id_barang;
 //                int totalBarang = Integer.parseInt(et_totalBeli.getText().toString());
-                int harga = 0;
-                BuyModel buyModel = new BuyModel(deskripsi, 0,0, hargaBarang);
-                db.collection("users").document(mUser).collection("belibarang").document().set(buyModel);
+                        int harga = totalYangDiBeli*hargabarang;
+                        BuyModel buyModel = new BuyModel(idBarang, Integer.parseInt(et_totalBeli.getText().toString()),harga, hargabarang);
+                        db.collection("users").document(mUser).collection("belibarang").document().set(buyModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(BuyActivity.this, "Anda telah memesan "+deskripsi, Toast.LENGTH_LONG).show();
+                                    BuyActivity.super.onBackPressed();
+                                }
+                            }
+                        });
+                    }
+                }
+
             }
         });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toHome = new Intent(BuyActivity.this, HomeActivity.class);
-                startActivity(toHome);
+                BuyActivity.super.onBackPressed();
             }
         });
         getIncomingIntent();
@@ -82,6 +101,7 @@ public class BuyActivity extends AppCompatActivity {
         hargabarang = getIntent().getIntExtra("hargaBarang", 0);
         stock = getIntent().getIntExtra("stock", 0);
         imageURL = getIntent().getStringExtra("image");
+        id_barang = getIntent().getStringExtra("id_barang");
 //        toBuy.putExtra("hargaBarang", sampahModel.getHarga());
 //        toBuy.putExtra("namaBarang", sampahModel.getNama());
 //        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
@@ -92,8 +112,13 @@ public class BuyActivity extends AppCompatActivity {
 
     private void setInten(String deskrpsi1, int hargabarang1, int stock1, String imageurl){
         tv_deskripsi.setText(deskrpsi1);
-        tv_harga.setText(Integer.toString(hargabarang1));
+        tv_harga.setText("Rp. "+Integer.toString(hargabarang1));
         tv_stock.setText(Integer.toString(stock1));
+        nama_item.setText(namabarang);
         Glide.with(getApplicationContext()).load(imageurl).into(img_sampah);
+    }
+
+    private boolean isEmpty(EditText etText) {
+        return etText.getText().toString().trim().length() == 0;
     }
 }

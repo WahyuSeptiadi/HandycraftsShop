@@ -3,8 +3,8 @@ package com.newbie.handycraftsshop.Model;
 import com.google.gson.annotations.SerializedName;
 
 public class BuyModel {
-    @SerializedName("nama_barang")
-    private String nama_barang;
+    @SerializedName("id_barang")
+    private String id_barang;
     @SerializedName("banyak_barang")
     private int banyak_barang;
     @SerializedName("hargaTotal")
@@ -15,19 +15,19 @@ public class BuyModel {
     public BuyModel(){
     }
 
-    public BuyModel(String nama_barang, int banyak_barang, int hargaTotal, int harga_barang) {
-        this.nama_barang = nama_barang;
+    public BuyModel(String id_barang, int banyak_barang, int hargaTotal, int harga_barang) {
+        this.id_barang = id_barang;
         this.banyak_barang = banyak_barang;
         this.hargaTotal = hargaTotal;
         this.harga_barang = harga_barang;
     }
 
-    public String getNama_barang() {
-        return nama_barang;
+    public String getId_barang() {
+        return id_barang;
     }
 
-    public void setNama_barang(String nama_barang) {
-        this.nama_barang = nama_barang;
+    public void setId_barang(String id_barang) {
+        this.id_barang = id_barang;
     }
 
     public int getBanyak_barang() {
