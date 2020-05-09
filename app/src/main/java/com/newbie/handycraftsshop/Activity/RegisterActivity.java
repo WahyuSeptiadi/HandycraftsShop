@@ -38,15 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     ProgressDialog pd;
 
+    String saldoAwal = "1.000.000";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-  //      setSupportActionBar(toolbar);
-    //    getSupportActionBar().setTitle("Register");
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         re_email = (EditText)findViewById(R.id.et_email);
         re_username = (EditText)findViewById(R.id.et_username);
@@ -114,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("id",userid);
                             hashMap.put("username", username);
                             hashMap.put("imageUrl","https://firebasestorage.googleapis.com/v0/b/handycrafts-shop.appspot.com/o/default.png?alt=media&token=a721ee3d-b599-40fc-aab7-f58cadc15861");
+                            hashMap.put("saldo", saldoAwal);
 
                             references.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

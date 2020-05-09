@@ -12,7 +12,7 @@
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/design_default_color_primary"
+        android:background="@color/colorTab"
         android:layout_gravity="center_horizontal">
 
         <RelativeLayout
@@ -80,7 +80,7 @@
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"
         android:elevation="6dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"
         android:layout_marginTop="300dp"
         app:fabSize="normal"/>
 </RelativeLayout>
