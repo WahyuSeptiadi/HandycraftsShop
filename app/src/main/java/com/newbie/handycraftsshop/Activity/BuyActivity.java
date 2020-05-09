@@ -43,6 +43,7 @@ public class BuyActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser().getUid();
         setContentView(R.layout.activity_buy);
+        nama_item = findViewById(R.id.tv_buy_nama_barang);
         tv_deskripsi = findViewById(R.id.tv_deskripsiBuy);
         tv_stock = findViewById(R.id.tv_stockBuy);
         tv_harga = findViewById(R.id.tv_priceBuy);
