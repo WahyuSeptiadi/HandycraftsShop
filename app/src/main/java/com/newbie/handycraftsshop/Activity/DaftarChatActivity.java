@@ -64,8 +64,6 @@ public class DaftarChatActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title){
             fragments.add(fragment);
             titles.add(title);
-
-
         }
 
         @Nullable

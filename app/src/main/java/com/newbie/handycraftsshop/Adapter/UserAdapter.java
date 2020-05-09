@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.newbie.handycraftsshop.Activity.ChatActivity;
+import com.newbie.handycraftsshop.Activity.HomeActivity;
 import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 
@@ -40,7 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         final User user = mUser.get(position);
         holder.username.setText(user.getUsername());
-
+        Glide.with(mContext).load(user.getImageUrl()).into(holder.profile_image);
         //holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         /*
         if (user.getImageUrl().equals("default")){

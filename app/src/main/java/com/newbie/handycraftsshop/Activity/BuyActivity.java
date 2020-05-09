@@ -107,14 +107,14 @@ public class BuyActivity extends AppCompatActivity {
 //        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
 //        toBuy.putExtra("image", sampahModel.getImage());
 //        toBuy.putExtra("stock", sampahModel.getStockbarang());
-        setInten(deskripsi, hargabarang, stock, imageURL);
+        setInten(namabarang, deskripsi, hargabarang, stock, imageURL);
     }
 
-    private void setInten(String deskrpsi1, int hargabarang1, int stock1, String imageurl){
+    private void setInten(String namabarang1, String deskrpsi1, int hargabarang1, int stock1, String imageurl){
         tv_deskripsi.setText(deskrpsi1);
         tv_harga.setText("Rp. "+Integer.toString(hargabarang1));
         tv_stock.setText(Integer.toString(stock1));
-        nama_item.setText(namabarang);
+        nama_item.setText(namabarang1);
         Glide.with(getApplicationContext()).load(imageurl).into(img_sampah);
     }
 
