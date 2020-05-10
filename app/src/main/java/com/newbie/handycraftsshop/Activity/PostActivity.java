@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -48,6 +49,9 @@ import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private Button btnPost;
@@ -77,6 +81,17 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mapsModel = mapsModel;
     }
 
+    private String deskripsi_barang2;
+    private String nama_barang2;
+    private String imageURL2;
+    private String id_barang2;
+    private int harga_barang2;
+    private int stock_barang2;
+    private String imagepublisher;
+    private String userID;
+    private String usernamepublisher;
+    private SampahModel sampahModel;
+
     private FirebaseFirestore db;
     private String mUser;
     private FirebaseUser firebaseUser;
@@ -95,6 +110,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
+        sampahModel = new SampahModel();
         postBarang = new SampahModel();
         mapsModel = new MapsModel();
         user = new User();
@@ -107,6 +123,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         getUsernameImageData();
+
+        getIncomingIntent();
 
         etNamaBarang = findViewById(R.id.et_post_name);
         etHarga = findViewById(R.id.et_post_price);
@@ -127,12 +145,45 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tambahBarang();
+
+                Bundle extras = getIntent().getExtras();
+                if(extras != null){
+
+                    updateData(id_barang2);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("deskripsi", deskripsi_barang2);
+                    map.put("harga", harga_barang2);
+                    map.put("image", imageURL2);
+                    map.put("nama", nama_barang2);
+                    map.put("stockbarang", stock_barang2);
+                    map.put("usernamepublisher", usernamepublisher);
+                    map.put("imagepublisher", imagepublisher);
+                    map.put("userID", userID);
+
+                    String aaa = db.collection("Data Postingan").document(id_barang2).toString();
+
+                    db.collection("Data Postingan").document(id_barang2)
+                            .update(map);
+
+                    Toast.makeText(PostActivity.this, "Data Berhasil Diubah", Toast.LENGTH_SHORT).show();
+
+                    Log.d(TAG, "APANIIII SUKSEEEEESSSSSSS  " + aaa);
+
+                    Log.d(TAG, "on click SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
+                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + nama_barang2);
+                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + deskripsi_barang2);
+                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + harga_barang2);
+                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + stock_barang2);
+//                    getIncomingIntent();
+
+                } else{
+                    tambahBarang();
+                }
+
                 onBackPressed();
 //                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 //                startActivityForResult(builder.build(PostActivity.this), PLACE_PICKER_REQUEST);
 
-                PostActivity.super.onBackPressed();
             }
         });
 
@@ -318,4 +369,143 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void loadMaps(){
         DocumentReference documentReference = db.collection("users").document(mUser).collection("location").document("toko");
     }
+
+    private void getIncomingIntent() {
+
+        nama_barang2 = getIntent().getStringExtra("namaBarang2");
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+
+            id_barang2 = extras.getString("id_barang2", "");
+            nama_barang2 = extras.getString("namaBarang2", "");
+            harga_barang2 = extras.getInt("hargaBarang2", 0);
+            stock_barang2 = extras.getInt("stock2", 0);
+            deskripsi_barang2 = extras.getString("deskripsi2", "");
+            imageURL2 = extras.getString("image2", "");
+            imagepublisher = extras.getString("imagepublisher", "");
+            userID = extras.getString("userID", "");
+            usernamepublisher = extras.getString("usernamepublisher", "");
+
+            Log.d("BEBAS APA AJA ", nama_barang2);
+            setInten(id_barang2, nama_barang2, deskripsi_barang2, harga_barang2, stock_barang2, imageURL2);
+
+        } else{
+            Log.d("INI ELSE", "BBBBBBBBBB");
+        }
+
+//        if (id_barang2.isEmpty()){
+//            Toast.makeText(mContext, "KOSOOOONGGGGG " + nama_barang2, Toast.LENGTH_SHORT).show();
+//        } else {
+//            Toast.makeText(mContext, "ADA ID NIH " + nama_barang2, Toast.LENGTH_SHORT).show();
+//            Log.d("BEBAS APA AJA", "AAAAAA");
+//        }
+
+//        deskripsi_barang2 = getIntent().getStringExtra("deskripsi2");
+//        nama_barang2 = getIntent().getStringExtra("namaBarang2");
+//        harga_barang2 = getIntent().getIntExtra("hargaBarang2", 0);
+//        stock_barang2 = getIntent().getIntExtra("stock2", 0);
+//        imageURL2 = getIntent().getStringExtra("image2");
+//        id_barang2 = getIntent().getStringExtra("id_barang2");
+
+//        toBuy.putExtra("hargaBarang", sampahModel.getHarga());
+//        toBuy.putExtra("namaBarang", sampahModel.getNama());
+//        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
+//        toBuy.putExtra("image", sampahModel.getImage());
+//        toBuy.putExtra("stock", sampahModel.getStockbarang());
+
+//        setInten(nama_barang2, deskripsi_barang2, harga_barang2, stock_barang2, imageURL2);
+    }
+
+    private void setInten(String id_barang2, String namabarang2, String deskrpsibarang2, int hargabarang2, int stockbarang2, String imageurl2) {
+
+        this.id_barang2 = id_barang2;
+        Log.d(TAG, "set inten SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
+
+        etNamaBarang = findViewById(R.id.et_post_name);
+        etHarga = findViewById(R.id.et_post_price);
+        etStockBarang = findViewById(R.id.et_post_total_stock);
+        etDeskripsi = findViewById(R.id.et_post_deskripsi);
+        iv_sampah = findViewById(R.id.cv_post_item_photo);
+
+        etNamaBarang.setText(namabarang2);
+        etDeskripsi.setText(deskrpsibarang2);
+        etHarga.setText(Integer.toString(hargabarang2));
+        etStockBarang.setText(Integer.toString(stockbarang2));
+        Glide.with(getApplicationContext()).load(imageurl2).into(iv_sampah);
+
+//        updateData(id_barang2);
+
+    }
+
+    private void updateData(String id_barang2){
+
+//        Log.d(TAG, "update data SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
+
+        DocumentReference documentReference = FirebaseFirestore.getInstance()
+                .collection("Data Postingan").document();
+
+//        CollectionReference collectionReference = db.collection("users")
+//                .document(mUser).collection("Data Post").getId();
+
+        etNamaBarang = findViewById(R.id.et_post_name);
+        etHarga = findViewById(R.id.et_post_price);
+        etStockBarang = findViewById(R.id.et_post_total_stock);
+        etDeskripsi = findViewById(R.id.et_post_deskripsi);
+        iv_sampah = findViewById(R.id.cv_post_item_photo);
+
+        deskripsi_barang2 = etDeskripsi.getText().toString();
+        String harga_barang_update = etHarga.getText().toString();
+        nama_barang2 = etNamaBarang.getText().toString();
+        String stock_barang_update = etStockBarang.getText().toString();
+
+        harga_barang2 = Integer.parseInt(harga_barang_update);
+        stock_barang2 = Integer.parseInt(stock_barang_update);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("deskripsi", deskripsi_barang2);
+        map.put("harga", harga_barang2);
+//        map.put("image", );
+        map.put("nama", nama_barang2);
+        map.put("stockbarang", stock_barang2);
+
+        Log.d(TAG, "update data SUKSEEEEESSSSSSS USERS DATA POST " + nama_barang2);
+
+//        db.collection("users").document(mUser)
+//                .collection("Data Post").document()
+//                .update(map);
+
+        documentReference.update(map)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "SUKSEEEEESSSSSSS FIXNYA DISINII " + nama_barang2);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "GAGAALLLLLLLLL USERS DATA POST", e);
+                    }
+                });
+
+        DocumentReference documentReference1 = FirebaseFirestore.getInstance()
+                .collection("Data Postingan").document();
+
+        documentReference1.update(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "SUKSEEEEESSSSSSS DATA POSTINGAN");
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "GAGAALLLLLLLLL USERS DATA POST", e);
+                    }
+                });
+
+    }
+
 }

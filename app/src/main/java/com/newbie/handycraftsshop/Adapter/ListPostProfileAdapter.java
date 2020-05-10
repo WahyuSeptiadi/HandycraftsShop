@@ -1,6 +1,8 @@
 package com.newbie.handycraftsshop.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.newbie.handycraftsshop.Activity.PostActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 
@@ -73,6 +76,54 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
         Glide.with(mContext)
                 .load(listSampah.get(position).getImage())
                 .into(holder.imgSampah);
+
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String ambil_data_image = listSampah.get(holder.getAdapterPosition()).getNama();
+
+                db = FirebaseFirestore.getInstance();
+
+                CollectionReference collectionReference = db.collection("Data Postingan");
+                collectionReference.whereEqualTo("nama", ambil_data_image).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+
+                            for (DocumentSnapshot documentSnapshot: task.getResult()){
+
+//                                Map<String, Object> map = new HashMap<>();
+//                                collectionReference.document(documentSnapshot.getId()).update(map);
+
+                                SampahModel sampahModel = documentSnapshot.toObject(SampahModel.class);
+
+                                Intent toPost = new Intent(mContext, PostActivity.class);
+
+                                collectionReference.document(documentSnapshot.getId()).update(documentSnapshot.getData());
+
+                                toPost.putExtra("id_barang2", documentSnapshot.getId());
+                                toPost.putExtra("hargaBarang2", sampahModel.getHarga());
+                                toPost.putExtra("namaBarang2", sampahModel.getNama());
+                                toPost.putExtra("deskripsi2", sampahModel.getDeskripsi());
+                                toPost.putExtra("image2", sampahModel.getImage());
+                                toPost.putExtra("stock2", sampahModel.getStockbarang());
+                                toPost.putExtra("imagepublisher", sampahModel.getImagepublisher());
+                                toPost.putExtra("userID", sampahModel.getUserID());
+                                toPost.putExtra("usernamepublisher", sampahModel.getUsernamepublisher());
+
+                                mContext.startActivity(toPost);
+                                Log.d("Check nama sampah", sampahModel.getNama());
+//                                Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
