@@ -6,13 +6,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +45,7 @@ import com.newbie.handycraftsshop.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -67,6 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListPostProfileAdapter myAdapter;
 
+    private SwipeRefreshLayout sRefresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
         nama_profile_User = findViewById(R.id.tv_NamaProfile);
         profileUser = findViewById(R.id.civ_ImageProfile);
         profil_saldo = findViewById(R.id.sisaSaldo);
+        sRefresh = findViewById(R.id.swapRefresh);
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -92,6 +99,21 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv_profile_sampah);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        sRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        sRefresh.setRefreshing(false);
+                        myAdapter.notifyDataSetChanged();
+                        getDataFromFirestore();
+                    }
+                }, 1000);
+            }
+        });
 
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +251,7 @@ public class ProfileActivity extends AppCompatActivity {
         db.collection("Data Postingan").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                downModelArrayList.clear();
                 for (DocumentSnapshot documentSnapshot: task.getResult()){
                     sampahModel = documentSnapshot.toObject(SampahModel.class);
                     if (Objects.equals(documentSnapshot.get("userID"), mUser)){

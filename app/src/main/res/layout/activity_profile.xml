@@ -96,18 +96,20 @@
             android:background="#000"/>
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swapRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_profile">
-
+        android:layout_below="@+id/rl_profile">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_profile_sampah"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_cardview_sampah_profile">
         </androidx.recyclerview.widget.RecyclerView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </RelativeLayout>
+
 
 </RelativeLayout>

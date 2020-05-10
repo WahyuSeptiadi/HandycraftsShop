@@ -7,15 +7,37 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Objects;
 import java.util.zip.Inflater;
 
 /**
@@ -27,6 +49,12 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
 
     private Context mContext;
     private ArrayList<SampahModel> listSampah;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private String mUser;
+    private DocumentReference documentReference;
+    private DatabaseReference reference;
+    private FirebaseUser firebaseUser;
 
     @NonNull
     @Override
@@ -45,6 +73,45 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
         Glide.with(mContext)
                 .load(listSampah.get(position).getImage())
                 .into(holder.imgSampah);
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db = FirebaseFirestore.getInstance();
+                mAuth = FirebaseAuth.getInstance();
+                mUser = mAuth.getCurrentUser().getUid();
+                CollectionReference data_postingan = db.collection("Data Postingan");
+                String nameOfpic = listSampah.get(holder.getAdapterPosition()).getImage();
+                CollectionReference data_post = db.collection("users").document(mUser).collection("Data Post");
+
+                data_postingan.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (DocumentSnapshot documentSnapshot : task.getResult()){
+                                data_postingan.document(documentSnapshot.getId()).delete();
+                                //Toast.makeText(mContext, "telah dihapus", Toast.LENGTH_LONG).show();
+
+                                data_post.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()){
+                                            for (DocumentSnapshot document : task.getResult()) {
+                                                data_post.document(document.getId()).delete();
+                                                Toast.makeText(mContext, "telah dihapus "+document.getId(), Toast.LENGTH_LONG).show();
+
+                                            }
+                                        }
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

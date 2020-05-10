@@ -131,6 +131,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                 onBackPressed();
 //                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 //                startActivityForResult(builder.build(PostActivity.this), PLACE_PICKER_REQUEST);
+
+                PostActivity.super.onBackPressed();
             }
         });
 
