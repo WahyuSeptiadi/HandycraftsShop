@@ -3,7 +3,6 @@ package com.newbie.handycraftsshop.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -116,10 +115,8 @@ public class BuyActivity extends AppCompatActivity {
                         Toast.makeText(BuyActivity.this, "Total barang yang Anda beli melebihi stok kami", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(BuyActivity.this, totBar, Toast.LENGTH_SHORT).show();
-                        String idBarang = id_barang;
-//                int totalBarang = Integer.parseInt(et_totalBeli.getText().toString());
                         int harga = totalYangDiBeli * hargabarang;
-                        BuyModel buyModel = new BuyModel(idBarang, Integer.parseInt(et_totalBeli.getText().toString()), harga, hargabarang);
+                        BuyModel buyModel = new BuyModel(id_barang, Integer.parseInt(et_totalBeli.getText().toString()), harga, hargabarang, namabarang, imageURL);
                         db.collection("users").document(mUser).collection("belibarang").document().set(buyModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

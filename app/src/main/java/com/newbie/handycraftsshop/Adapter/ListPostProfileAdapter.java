@@ -93,16 +93,8 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                         if (task.isSuccessful()){
 
                             for (DocumentSnapshot documentSnapshot: task.getResult()){
-
-//                                Map<String, Object> map = new HashMap<>();
-//                                collectionReference.document(documentSnapshot.getId()).update(map);
-
                                 SampahModel sampahModel = documentSnapshot.toObject(SampahModel.class);
-
                                 Intent toPost = new Intent(mContext, PostActivity.class);
-
-                                collectionReference.document(documentSnapshot.getId()).update(documentSnapshot.getData());
-
                                 toPost.putExtra("id_barang2", documentSnapshot.getId());
                                 toPost.putExtra("hargaBarang2", sampahModel.getHarga());
                                 toPost.putExtra("namaBarang2", sampahModel.getNama());
@@ -113,9 +105,8 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                                 toPost.putExtra("userID", sampahModel.getUserID());
                                 toPost.putExtra("usernamepublisher", sampahModel.getUsernamepublisher());
 
+                                collectionReference.document(documentSnapshot.getId()).update(documentSnapshot.getData());
                                 mContext.startActivity(toPost);
-                                Log.d("Check nama sampah", sampahModel.getNama());
-//                                Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
 
                             }
                         }

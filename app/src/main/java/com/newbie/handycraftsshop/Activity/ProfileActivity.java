@@ -203,8 +203,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-
                         User user = new User(mUser, username, downloadUri.toString());
                         reference.setValue(user);
                     }else{

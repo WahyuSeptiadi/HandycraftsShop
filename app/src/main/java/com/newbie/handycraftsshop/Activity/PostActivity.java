@@ -115,6 +115,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapsModel = new MapsModel();
         user = new User();
 
+
         mapView =(MapView) findViewById(R.id.mv_location);
         if(mapView != null){
             mapView.onCreate(null);
@@ -124,7 +125,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         getUsernameImageData();
 
-        getIncomingIntent();
+//        getIncomingIntent();
 
         etNamaBarang = findViewById(R.id.et_post_name);
         etHarga = findViewById(R.id.et_post_price);
@@ -145,44 +146,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle extras = getIntent().getExtras();
-                if(extras != null){
-
-                    updateData(id_barang2);
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("deskripsi", deskripsi_barang2);
-                    map.put("harga", harga_barang2);
-                    map.put("image", imageURL2);
-                    map.put("nama", nama_barang2);
-                    map.put("stockbarang", stock_barang2);
-                    map.put("usernamepublisher", usernamepublisher);
-                    map.put("imagepublisher", imagepublisher);
-                    map.put("userID", userID);
-
-                    String aaa = db.collection("Data Postingan").document(id_barang2).toString();
-
-                    db.collection("Data Postingan").document(id_barang2)
-                            .update(map);
-
-                    Toast.makeText(PostActivity.this, "Data Berhasil Diubah", Toast.LENGTH_SHORT).show();
-
-                    Log.d(TAG, "APANIIII SUKSEEEEESSSSSSS  " + aaa);
-
-                    Log.d(TAG, "on click SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
-                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + nama_barang2);
-                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + deskripsi_barang2);
-                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + harga_barang2);
-                    Log.d(TAG, "SUKSEEEEESSSSSSS NIH BARANGNYA " + stock_barang2);
-//                    getIncomingIntent();
-
-                } else{
-                    tambahBarang();
-                }
-
+                tambahBarang();
                 onBackPressed();
-//                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-//                startActivityForResult(builder.build(PostActivity.this), PLACE_PICKER_REQUEST);
 
             }
         });
@@ -204,7 +169,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onStart() {
         super.onStart();
-//        mapView.onStart();
     }
 
     public void tambahBarang() {
@@ -221,8 +185,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             StorageReference storageRef = storage.getReference()
                     .child(System.currentTimeMillis()
                     + ".jpg");
-
-//            db.collection("users").document(mUser).update("image", postBarang.getImage());
             UploadTask uploadTask = storageRef.putFile(mImageUri);
             Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -242,14 +204,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                         SampahModel postBarang = new SampahModel(user.getId(), nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername());
 
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
-
-                        //                        db.collection("users").document(mUser).update("image", downloadUri.toString());
-
-                        if (postBarang.getImage() != null) {
-
-                        }else {
-
-                        }
 
                         db.collection("users").document(mUser)
                                 .collection("Data Post")
@@ -290,13 +244,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            mImageUri = data.getData();
-//            Picasso.get().load(mImageUri).into(iv_sampah);
-//            insertImage(mImageUri);
-//            Picasso.with(this).load(mImageUri).into(iv_sampah);
-//        }
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             mImageUri = result.getUri();
@@ -308,24 +255,10 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-//    public void pickFromGallery() {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(intent.createChooser(intent, "pilih gambar"), PICK_IMAGE);
-//    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         gMap = googleMap;
-        //Mendapatkan Dokumen
         DocumentReference documentReference = db.collection("users").document(mUser).collection("location").document("toko");
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -350,8 +283,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
         moveCamera(new LatLng(latit, longit), 15f);
-//        gMap.setMyLocationEnabled(true);
-
     }
 
     private void moveCamera(LatLng latLng, float zoom){
@@ -364,148 +295,6 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void hideSoftKeyboard(){
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-    }
-
-    private void loadMaps(){
-        DocumentReference documentReference = db.collection("users").document(mUser).collection("location").document("toko");
-    }
-
-    private void getIncomingIntent() {
-
-        nama_barang2 = getIntent().getStringExtra("namaBarang2");
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-
-            id_barang2 = extras.getString("id_barang2", "");
-            nama_barang2 = extras.getString("namaBarang2", "");
-            harga_barang2 = extras.getInt("hargaBarang2", 0);
-            stock_barang2 = extras.getInt("stock2", 0);
-            deskripsi_barang2 = extras.getString("deskripsi2", "");
-            imageURL2 = extras.getString("image2", "");
-            imagepublisher = extras.getString("imagepublisher", "");
-            userID = extras.getString("userID", "");
-            usernamepublisher = extras.getString("usernamepublisher", "");
-
-            Log.d("BEBAS APA AJA ", nama_barang2);
-            setInten(id_barang2, nama_barang2, deskripsi_barang2, harga_barang2, stock_barang2, imageURL2);
-
-        } else{
-            Log.d("INI ELSE", "BBBBBBBBBB");
-        }
-
-//        if (id_barang2.isEmpty()){
-//            Toast.makeText(mContext, "KOSOOOONGGGGG " + nama_barang2, Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(mContext, "ADA ID NIH " + nama_barang2, Toast.LENGTH_SHORT).show();
-//            Log.d("BEBAS APA AJA", "AAAAAA");
-//        }
-
-//        deskripsi_barang2 = getIntent().getStringExtra("deskripsi2");
-//        nama_barang2 = getIntent().getStringExtra("namaBarang2");
-//        harga_barang2 = getIntent().getIntExtra("hargaBarang2", 0);
-//        stock_barang2 = getIntent().getIntExtra("stock2", 0);
-//        imageURL2 = getIntent().getStringExtra("image2");
-//        id_barang2 = getIntent().getStringExtra("id_barang2");
-
-//        toBuy.putExtra("hargaBarang", sampahModel.getHarga());
-//        toBuy.putExtra("namaBarang", sampahModel.getNama());
-//        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
-//        toBuy.putExtra("image", sampahModel.getImage());
-//        toBuy.putExtra("stock", sampahModel.getStockbarang());
-
-//        setInten(nama_barang2, deskripsi_barang2, harga_barang2, stock_barang2, imageURL2);
-    }
-
-    private void setInten(String id_barang2, String namabarang2, String deskrpsibarang2, int hargabarang2, int stockbarang2, String imageurl2) {
-
-        this.id_barang2 = id_barang2;
-        Log.d(TAG, "set inten SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
-
-        etNamaBarang = findViewById(R.id.et_post_name);
-        etHarga = findViewById(R.id.et_post_price);
-        etStockBarang = findViewById(R.id.et_post_total_stock);
-        etDeskripsi = findViewById(R.id.et_post_deskripsi);
-        iv_sampah = findViewById(R.id.cv_post_item_photo);
-
-        etNamaBarang.setText(namabarang2);
-        etDeskripsi.setText(deskrpsibarang2);
-        etHarga.setText(Integer.toString(hargabarang2));
-        etStockBarang.setText(Integer.toString(stockbarang2));
-        Glide.with(getApplicationContext()).load(imageurl2).into(iv_sampah);
-
-//        updateData(id_barang2);
-
-    }
-
-    private void updateData(String id_barang2){
-
-//        Log.d(TAG, "update data SUKSEEEEESSSSSSS USERS DATA POST " + id_barang2);
-
-        DocumentReference documentReference = FirebaseFirestore.getInstance()
-                .collection("Data Postingan").document();
-
-//        CollectionReference collectionReference = db.collection("users")
-//                .document(mUser).collection("Data Post").getId();
-
-        etNamaBarang = findViewById(R.id.et_post_name);
-        etHarga = findViewById(R.id.et_post_price);
-        etStockBarang = findViewById(R.id.et_post_total_stock);
-        etDeskripsi = findViewById(R.id.et_post_deskripsi);
-        iv_sampah = findViewById(R.id.cv_post_item_photo);
-
-        deskripsi_barang2 = etDeskripsi.getText().toString();
-        String harga_barang_update = etHarga.getText().toString();
-        nama_barang2 = etNamaBarang.getText().toString();
-        String stock_barang_update = etStockBarang.getText().toString();
-
-        harga_barang2 = Integer.parseInt(harga_barang_update);
-        stock_barang2 = Integer.parseInt(stock_barang_update);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("deskripsi", deskripsi_barang2);
-        map.put("harga", harga_barang2);
-//        map.put("image", );
-        map.put("nama", nama_barang2);
-        map.put("stockbarang", stock_barang2);
-
-        Log.d(TAG, "update data SUKSEEEEESSSSSSS USERS DATA POST " + nama_barang2);
-
-//        db.collection("users").document(mUser)
-//                .collection("Data Post").document()
-//                .update(map);
-
-        documentReference.update(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "SUKSEEEEESSSSSSS FIXNYA DISINII " + nama_barang2);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "GAGAALLLLLLLLL USERS DATA POST", e);
-                    }
-                });
-
-        DocumentReference documentReference1 = FirebaseFirestore.getInstance()
-                .collection("Data Postingan").document();
-
-        documentReference1.update(map)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "SUKSEEEEESSSSSSS DATA POSTINGAN");
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "GAGAALLLLLLLLL USERS DATA POST", e);
-                    }
-                });
-
     }
 
 }

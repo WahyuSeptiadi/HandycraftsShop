@@ -1,50 +1,79 @@
 package com.newbie.handycraftsshop.Model;
 
+import com.google.firebase.firestore.PropertyName;
+
 public class HistoryModel {
-    private String idBarang;
-    private int banyakBarang, hargaBarang, totalHarga;
+    @PropertyName("banyak_barang")
+    private int banyak_barang;
+    @PropertyName("hargaTotal")
+    private int hargaTotal;
+    @PropertyName("harga_barang")
+    private int harga_barang;
+    @PropertyName("id_barang")
+    private String id_barang;
+    @PropertyName("imagesampah")
+    private String imagesampah;
+    @PropertyName("nama_barang")
+    private String nama_barang;
 
-    public HistoryModel (String idBarang, int banyakBarang, int hargaBarang, int totalHarga){
-        this.idBarang = idBarang;
-        this.banyakBarang = banyakBarang;
-        this.hargaBarang = hargaBarang;
-        this.totalHarga = totalHarga;
-    }
-    public HistoryModel (){
+    public HistoryModel(){
 
-    }
-
-    public String getIdBarang() {
-        return idBarang;
-    }
-
-    public void setIdBarang(String idBarang) {
-        this.idBarang = idBarang;
     }
 
-    public int getBanyakBarang() {
-        return banyakBarang;
+    public HistoryModel(int banyak_barang, int hargaTotal, int harga_barang, String id_barang, String imagesampah, String nama_barang) {
+        this.banyak_barang = banyak_barang;
+        this.hargaTotal = hargaTotal;
+        this.harga_barang = harga_barang;
+        this.id_barang = id_barang;
+        this.imagesampah = imagesampah;
+        this.nama_barang = nama_barang;
     }
 
-    public void setBanyakBarang(int banyakBarang) {
-        this.banyakBarang = banyakBarang;
+    public int getBanyak_barang() {
+        return banyak_barang;
     }
 
-    public int getHargaBarang() {
-        return hargaBarang;
+    public void setBanyak_barang(int banyak_barang) {
+        this.banyak_barang = banyak_barang;
     }
 
-    public void setHargaBarang(int hargaBarang) {
-        this.hargaBarang = hargaBarang;
+    public int getHargaTotal() {
+        return hargaTotal;
     }
 
-    public int getTotalHarga() {
-        return totalHarga;
+    public void setHargaTotal(int hargaTotal) {
+        this.hargaTotal = hargaTotal;
     }
 
-    public void setTotalHarga(int totalHarga) {
-        this.totalHarga = totalHarga;
+    public int getHarga_barang() {
+        return harga_barang;
     }
 
+    public void setHarga_barang(int harga_barang) {
+        this.harga_barang = harga_barang;
+    }
 
+    public String getId_barang() {
+        return id_barang;
+    }
+
+    public void setId_barang(String id_barang) {
+        this.id_barang = id_barang;
+    }
+
+    public String getImagesampah() {
+        return imagesampah;
+    }
+
+    public void setImagesampah(String imagesampah) {
+        this.imagesampah = imagesampah;
+    }
+
+    public String getNama_barang() {
+        return nama_barang;
+    }
+
+    public void setNama_barang(String nama_barang) {
+        this.nama_barang = nama_barang;
+    }
 }

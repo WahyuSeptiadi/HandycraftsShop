@@ -11,15 +11,21 @@ public class BuyModel {
     private int hargaTotal;
     @SerializedName("harga_barang")
     private int harga_barang;
+    @SerializedName("nama_barang")
+    private String nama_barang;
+    @SerializedName("imagesampah")
+    private String imagesampah;
 
     public BuyModel(){
     }
 
-    public BuyModel(String id_barang, int banyak_barang, int hargaTotal, int harga_barang) {
+    public BuyModel(String id_barang, int banyak_barang, int hargaTotal, int harga_barang, String nama_barang, String imagesampah) {
         this.id_barang = id_barang;
         this.banyak_barang = banyak_barang;
         this.hargaTotal = hargaTotal;
         this.harga_barang = harga_barang;
+        this.nama_barang = nama_barang;
+        this.imagesampah = imagesampah;
     }
 
     public String getId_barang() {
@@ -52,5 +58,21 @@ public class BuyModel {
 
     public void setHarga_barang(int harga_barang) {
         this.harga_barang = harga_barang;
+    }
+
+    public String getNama_barang() {
+        return nama_barang;
+    }
+
+    public void setNama_barang(String nama_barang) {
+        this.nama_barang = nama_barang;
+    }
+
+    public String getImagesampah() {
+        return imagesampah;
+    }
+
+    public void setImagesampah(String imagesampah) {
+        this.imagesampah = imagesampah;
     }
 }
