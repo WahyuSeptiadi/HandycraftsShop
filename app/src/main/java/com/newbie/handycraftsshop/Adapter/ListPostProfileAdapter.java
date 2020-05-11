@@ -34,9 +34,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.newbie.handycraftsshop.Activity.PostActivity;
+import com.newbie.handycraftsshop.Activity.UpdateActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 
+import java.security.UnresolvedPermission;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -94,19 +96,19 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
 
                             for (DocumentSnapshot documentSnapshot: task.getResult()){
                                 SampahModel sampahModel = documentSnapshot.toObject(SampahModel.class);
-                                Intent toPost = new Intent(mContext, PostActivity.class);
-                                toPost.putExtra("id_barang2", documentSnapshot.getId());
-                                toPost.putExtra("hargaBarang2", sampahModel.getHarga());
-                                toPost.putExtra("namaBarang2", sampahModel.getNama());
-                                toPost.putExtra("deskripsi2", sampahModel.getDeskripsi());
-                                toPost.putExtra("image2", sampahModel.getImage());
-                                toPost.putExtra("stock2", sampahModel.getStockbarang());
-                                toPost.putExtra("imagepublisher", sampahModel.getImagepublisher());
-                                toPost.putExtra("userID", sampahModel.getUserID());
-                                toPost.putExtra("usernamepublisher", sampahModel.getUsernamepublisher());
+                                Intent toUpdate = new Intent(mContext, UpdateActivity.class);
+                                toUpdate.putExtra("id_barang2", documentSnapshot.getId());
+                                toUpdate.putExtra("hargaBarang2", sampahModel.getHarga());
+                                toUpdate.putExtra("namaBarang2", sampahModel.getNama());
+                                toUpdate.putExtra("deskripsi2", sampahModel.getDeskripsi());
+                                toUpdate.putExtra("image2", sampahModel.getImage());
+                                toUpdate.putExtra("stock2", sampahModel.getStockbarang());
+                                toUpdate.putExtra("imagepublisher", sampahModel.getImagepublisher());
+                                toUpdate.putExtra("userID", sampahModel.getUserID());
+                                toUpdate.putExtra("usernamepublisher", sampahModel.getUsernamepublisher());
 
                                 collectionReference.document(documentSnapshot.getId()).update(documentSnapshot.getData());
-                                mContext.startActivity(toPost);
+                                mContext.startActivity(toUpdate);
 
                             }
                         }

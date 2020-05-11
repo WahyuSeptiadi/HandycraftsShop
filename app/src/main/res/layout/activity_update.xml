@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.UpdateActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topBar"
+        android:background="@color/colorTab"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        >
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/btn_post_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_back"
+        android:contentDescription="@string/todo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="Update Item"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:id="@+id/scrollView"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/cv_post_item_photo"
+                android:layout_width="171dp"
+                android:layout_height="170dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/todo"
+                android:foregroundGravity="top"
+                android:padding="10dp"
+                android:src="@drawable/add_photo_icon"
+                />
+            'Copyright by Good Ware on FlatIcon'
+
+            <EditText
+                android:id="@+id/et_post_name"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text"
+                android:hint="Nama Barang"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:layout_below="@+id/cv_post_item_photo"/>
+
+            <EditText
+                android:id="@+id/et_post_price"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text"
+                android:hint="Harga Barang"
+                android:inputType="number"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:layout_below="@+id/et_post_name"/>
+
+
+
+            <EditText
+                android:id="@+id/et_post_deskripsi"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text"
+                android:hint="Deskripsi Barang"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:layout_below="@+id/et_post_total_stock"/>
+
+            <EditText
+                android:id="@+id/et_post_total_stock"
+                android:layout_width="292dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text"
+                android:hint="Stok Barang"
+                android:inputType="number"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="14dp"
+                android:layout_below="@+id/et_post_price"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mv_location"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_below="@id/et_post_deskripsi"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                />
+
+            <Button
+                android:id="@+id/btn_postBarang"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mv_location"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_button"
+                android:text="Update Barang"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

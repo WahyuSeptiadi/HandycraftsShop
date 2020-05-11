@@ -23,6 +23,8 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
+        <activity android:name=".Activity.UpdateActivity"></activity>
+        <activity android:name=".Activity.MapsUpdate"></activity>
         <activity android:name=".Activity.Maps"></activity>
         <activity android:name=".Activity.DaftarChatActivity" />
         <activity android:name=".Activity.PostActivity" />
