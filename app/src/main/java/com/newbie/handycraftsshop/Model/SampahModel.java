@@ -19,11 +19,15 @@ public class SampahModel {
     private String imagepublisher;
     @SerializedName("usernamepublisher")
     private String usernamepublisher;
+    @SerializedName("latitude")
+    private double latitude;
+    @SerializedName("longitude")
+    private double longitude;
 
     public SampahModel(){
     }
 
-    public SampahModel(String userID, String nama, int harga, int stockbarang, String deskripsi, String image, String imagepublisher, String usernamepublisher) {
+    public SampahModel(String userID, String nama, int harga, int stockbarang, String deskripsi, String image, String imagepublisher, String usernamepublisher, double latitude, double longitude) {
         this.userID = userID;
         this.nama = nama;
         this.harga = harga;
@@ -32,6 +36,8 @@ public class SampahModel {
         this.image = image;
         this.imagepublisher = imagepublisher;
         this.usernamepublisher = usernamepublisher;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public String getNama() {
@@ -96,5 +102,21 @@ public class SampahModel {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

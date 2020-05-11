@@ -3,8 +3,13 @@ package com.newbie.handycraftsshop.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,7 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,26 +34,35 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.newbie.handycraftsshop.Model.BuyModel;
 import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
-public class BuyActivity extends AppCompatActivity {
+public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallback {
 
+    private static final String TAG = "BuyActivity";
     private ImageView btnBack;
     private String deskripsi, namabarang, imageURL, id_barang, idPublisher;
     private int hargabarang, stock;
-    private TextView tv_deskripsi, tv_stock, tv_harga, nama_item;
+    private TextView tv_deskripsi, tv_stock, tv_harga, nama_item, tv_location;
     private ImageView img_sampah;
     private BuyModel buyModel;
     private Button btnBuy;
     private EditText et_totalBeli;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
+    private GoogleMap gMap;
     private String mUser;
+    private MapView mapView;
+    private double latitude, longitude;
     FirebaseUser firebaseUser;
 
     DatabaseReference reference,referencePublisher;
@@ -62,8 +84,17 @@ public class BuyActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btn_profile_back);
         btnBuy = findViewById(R.id.btn_beli_buy);
         et_totalBeli = findViewById(R.id.totalBeli);
+        tv_location = findViewById(R.id.tv_locationBuy);
+
         buyModel = new BuyModel();
         String totBar = et_totalBeli.getText().toString();
+
+        mapView =(MapView) findViewById(R.id.mv_locationInBuy);
+        if(mapView != null){
+            mapView.onCreate(null);
+            mapView.onResume();
+            mapView.getMapAsync(this);
+        }
 
         getIncomingIntent();
 
@@ -161,24 +192,49 @@ public class BuyActivity extends AppCompatActivity {
         imageURL = getIntent().getStringExtra("image");
         id_barang = getIntent().getStringExtra("id_barang");
         idPublisher= getIntent().getStringExtra("userID");
+        latitude = getIntent().getDoubleExtra("latitude", 0);
+        longitude = getIntent().getDoubleExtra("longitude", 0);
 
-//        toBuy.putExtra("hargaBarang", sampahModel.getHarga());
-//        toBuy.putExtra("namaBarang", sampahModel.getNama());
-//        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
-//        toBuy.putExtra("image", sampahModel.getImage());
-//        toBuy.putExtra("stock", sampahModel.getStockbarang());
-        setInten(namabarang, deskripsi, hargabarang, stock, imageURL);
+        setInten(namabarang, deskripsi, hargabarang, stock, imageURL, latitude, longitude);
     }
 
-    private void setInten(String namabarang1, String deskrpsi1, int hargabarang1, int stock1, String imageurl) {
+    private void setInten(String namabarang1, String deskrpsi1, int hargabarang1, int stock1, String imageurl, double latit, double longit) {
         tv_deskripsi.setText(deskrpsi1);
         tv_harga.setText("Rp. " + Integer.toString(hargabarang1));
         tv_stock.setText(Integer.toString(stock1));
         nama_item.setText(namabarang1);
         Glide.with(getApplicationContext()).load(imageurl).into(img_sampah);
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latit, longit, 1);
+            tv_location.setText(addresses.get(0).getAddressLine(0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        gMap = googleMap;
+        moveCamera(new LatLng(latitude, longitude), 15f);
+    }
+
+
+    private void moveCamera(LatLng latLng, float zoom){
+        gMap.clear();
+        Log.d(TAG, "moveCamera: moving camera " + latLng.latitude + latLng.longitude);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        MarkerOptions options = new MarkerOptions().position(latLng);
+        gMap.addMarker(options);
+        hideSoftKeyboard();
+    }
+
+    private void hideSoftKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

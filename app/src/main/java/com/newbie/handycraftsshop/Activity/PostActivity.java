@@ -5,20 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -48,9 +45,6 @@ import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -147,8 +141,8 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 tambahBarang();
-                onBackPressed();
-
+                Intent toHome = new Intent(PostActivity.this, HomeActivity.class);
+                startActivity(toHome);
             }
         });
 
@@ -184,7 +178,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (mImageUri != null) {
             StorageReference storageRef = storage.getReference()
                     .child(System.currentTimeMillis()
-                    + ".jpg");
+                            + ".jpg");
             UploadTask uploadTask = storageRef.putFile(mImageUri);
             Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -201,7 +195,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult();
                         postBarang.setImage(downloadUri.toString());
-                        SampahModel postBarang = new SampahModel(user.getId(), nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername());
+                        SampahModel postBarang = new SampahModel(user.getId(), nama_barang, Integer.valueOf(harga), Integer.valueOf(stock), desc, downloadUri.toString(), user.getImageUrl(), user.getUsername(), latit, longit);
 
                         Toast.makeText(PostActivity.this, "Postingan Berhasil Ditambahkan", Toast.LENGTH_LONG).show();
 
@@ -286,6 +280,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void moveCamera(LatLng latLng, float zoom){
+        gMap.clear();
         Log.d(TAG, "moveCamera: moving camera " + latLng.latitude + latLng.longitude);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         MarkerOptions options = new MarkerOptions().position(latLng);

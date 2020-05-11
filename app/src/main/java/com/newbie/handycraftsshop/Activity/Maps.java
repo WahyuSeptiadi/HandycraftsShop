@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.newbie.handycraftsshop.Constant.ERROR_DIALOG_REQUEST;
@@ -173,7 +174,7 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
         if (list.size() > 0){
             Address address = list.get(0);
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getLocality());
-            mapsModel.setNama(address.getLocality());
+            mapsModel.setNama(address.getCountryName().concat(address.getFeatureName()));
             mapsModel.setLatitude(address.getLatitude());
             mapsModel.setLongitude(address.getLongitude());
         }else{
@@ -306,8 +307,8 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
         if (mLocationPermissionGranted){
             getDeviceLocation();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED){
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED){
                 return;
             }
             nMap.setMyLocationEnabled(true);
@@ -324,20 +325,29 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
 
                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        User user = dataSnapshot.getValue(User.class);
-                        mapsModel.setNama(user.getUsername()+" Location");
-                        mapsModel.setLatitude(latLng.latitude);
-                        mapsModel.setLongitude(latLng.longitude);
+//                        User user = dataSnapshot.getValue(User.class);
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                            mapsModel.setNama(addresses.get(0).getAddressLine(0));
+                            mapsModel.setLatitude(latLng.latitude);
+                            mapsModel.setLongitude(latLng.longitude);
+                            Log.d(TAG, addresses.get(0).getLocality());
+                            Log.d(TAG, addresses.get(0).getAdminArea());
+                            Log.d(TAG, addresses.get(0).getSubLocality());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-
                 nMap.addMarker(markerOptions);
             }
         });
