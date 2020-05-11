@@ -32,7 +32,7 @@ import java.util.HashMap;
 public class BuyActivity extends AppCompatActivity {
 
     private ImageView btnBack;
-    private String deskripsi, namabarang, imageURL, id_barang;
+    private String deskripsi, namabarang, imageURL, id_barang, idPublisher;
     private int hargabarang, stock;
     private TextView tv_deskripsi, tv_stock, tv_harga, nama_item;
     private ImageView img_sampah;
@@ -44,8 +44,8 @@ public class BuyActivity extends AppCompatActivity {
     private String mUser;
     FirebaseUser firebaseUser;
 
-    DatabaseReference reference;
-    private int saldo_sekarang;
+    DatabaseReference reference,referencePublisher;
+    private int saldo_user_sekarang, saldo_publisher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +72,33 @@ public class BuyActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
         HashMap hashMap = new HashMap();
-
+        HashMap hashMapPublish = new HashMap();
+        //buat pembeli
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                saldo_sekarang = Integer.valueOf(user.getSaldo());
+                saldo_user_sekarang = Integer.valueOf(user.getSaldo());
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        //buat publishersaldo_publisher
+        referencePublisher = FirebaseDatabase.getInstance().getReference("Users").child(idPublisher);
+        referencePublisher.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                saldo_publisher = Integer.valueOf(user.getSaldo());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -108,14 +124,18 @@ public class BuyActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    hashMap.put("saldo", String.valueOf(saldo_sekarang - harga));
-
+                                    hashMap.put("saldo", String.valueOf(saldo_user_sekarang - harga));
+                                    hashMapPublish.put("saldo", String.valueOf(saldo_publisher + harga));
 
                                     reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
-
                                             Toast.makeText(BuyActivity.this, "Anda telah memesan " + deskripsi, Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    referencePublisher.updateChildren(hashMapPublish).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
                                         }
                                     });
                                     BuyActivity.super.onBackPressed();
@@ -143,6 +163,8 @@ public class BuyActivity extends AppCompatActivity {
         stock = getIntent().getIntExtra("stock", 0);
         imageURL = getIntent().getStringExtra("image");
         id_barang = getIntent().getStringExtra("id_barang");
+        idPublisher= getIntent().getStringExtra("userID");
+
 //        toBuy.putExtra("hargaBarang", sampahModel.getHarga());
 //        toBuy.putExtra("namaBarang", sampahModel.getNama());
 //        toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());

@@ -130,6 +130,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                                 toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
                                 toBuy.putExtra("image", sampahModel.getImage());
                                 toBuy.putExtra("stock", sampahModel.getStockbarang());
+                                toBuy.putExtra("userID", sampahModel.getUserID());
                                 mContext.startActivity(toBuy);
                                 Log.d("CheckSampahModel",  sampahModel.getNama());
                                 Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();

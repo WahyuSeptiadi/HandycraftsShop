@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(""); 
+        getSupportActionBar().setTitle("");
 
         btn_back = findViewById(R.id.btn_profile_back);
         nama_profile_User = findViewById(R.id.tv_NamaProfile);
