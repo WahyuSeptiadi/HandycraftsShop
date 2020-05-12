@@ -118,16 +118,7 @@
                     android:textSize="20sp"
                     android:layout_marginLeft="5dp"
                     android:textColor="#000" />
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_locationBuy"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/tv_stockBuy"-->
-<!--                    android:layout_toRightOf="@+id/ic_locationBuy"-->
-<!--                    android:text="Magetan"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:textColor="#000" />-->
+
                 <TextView
                     android:id="@+id/tv_deskripsiBuy"
                     android:layout_width="wrap_content"
@@ -138,6 +129,16 @@
                     android:layout_marginLeft="5dp"
                     android:text="Terbuat dari tembaga dan alumunium yang terbaik."
                     android:textSize="16dp"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/tv_locationBuy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_totalBuy"
+                    android:text="Magetan"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="20sp"
                     android:textColor="#000" />
 
                 <TextView
