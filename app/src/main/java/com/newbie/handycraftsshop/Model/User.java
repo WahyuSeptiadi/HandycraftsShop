@@ -13,6 +13,13 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
+    public User(String id, String username, String imageUrl, String saldo) {
+        this.id = id;
+        this.username = username;
+        this.imageUrl = imageUrl;
+        this.saldo = saldo;
+    }
+
     public User() {
 
     }
