@@ -84,7 +84,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
         btnBack = findViewById(R.id.btn_profile_back);
         btnBuy = findViewById(R.id.btn_beli_buy);
         et_totalBeli = findViewById(R.id.totalBeli);
-        tv_location = findViewById(R.id.tv_locationBuy);
+//        tv_location = findViewById(R.id.tv_locationBuy);
 
         buyModel = new BuyModel();
         String totBar = et_totalBeli.getText().toString();

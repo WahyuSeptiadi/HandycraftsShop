@@ -55,7 +55,7 @@
                 android:layout_width="171dp"
                 android:layout_height="170dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:contentDescription="@string/todo"
                 android:foregroundGravity="top"
                 android:padding="10dp"
@@ -130,7 +130,7 @@
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mv_location"
-                android:layout_width="200dp"
+                android:layout_width="292dp"
                 android:layout_height="100dp"
                 android:layout_below="@id/et_post_deskripsi"
                 android:layout_marginTop="10dp"

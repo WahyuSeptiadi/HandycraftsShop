@@ -73,7 +73,6 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setTitle("");
@@ -208,7 +207,7 @@ public class ChatActivity extends AppCompatActivity {
                                     if (response.code() == 200){
                                         if (response.body().success == 1){
                                             // BUAT CEK NOTIFICATION PESAN TERKIRIM
-                                            Toast.makeText(ChatActivity.this, "Success :)", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ChatActivity.this, "Pesan Terkirim :)", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }

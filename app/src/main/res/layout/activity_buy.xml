@@ -55,14 +55,22 @@
                     android:layout_height="315dp"
                     android:background="@color/cardview_dark_background"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="18dp"
                     android:contentDescription="@string/todo" />
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mv_locationInBuy"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="260dp"
+                    android:layout_marginTop="260dp"
+                    android:layout_marginBottom="10dp"
+                    />
 
                 <ImageView
                     android:id="@+id/ic_priceBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/imgSampahBuy"
+                    android:layout_below="@id/mv_locationInBuy"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginStart="2.5dp"
                     android:src="@drawable/ic_price" />
@@ -74,19 +82,19 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="2.5dp"
                     android:src="@drawable/ic_stock"/>
-                <ImageView
-                    android:id="@+id/ic_locationBuy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ic_stockBuy"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginStart="2.5dp"
-                    android:src="@drawable/ic_location"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/ic_locationBuy"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/ic_stockBuy"-->
+<!--                    android:layout_marginTop="3dp"-->
+<!--                    android:layout_marginStart="2.5dp"-->
+<!--                    android:src="@drawable/ic_location"/>-->
                 <ImageView
                     android:id="@+id/ic_deskripsiBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/ic_locationBuy"
+                    android:layout_below="@+id/ic_stockBuy"
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="2.5dp"
                     android:src="@drawable/ic_deskrips"/>
@@ -95,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/ic_priceBuy"
-                    android:layout_below="@id/imgSampahBuy"
+                    android:layout_below="@id/mv_locationInBuy"
                     android:text="16.000"
                     android:textSize="20sp"
                     android:layout_marginLeft="5dp"
@@ -110,41 +118,34 @@
                     android:textSize="20sp"
                     android:layout_marginLeft="5dp"
                     android:textColor="#000" />
-                <TextView
-                    android:id="@+id/tv_locationBuy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_stockBuy"
-                    android:layout_toRightOf="@+id/ic_locationBuy"
-                    android:text="Magetan"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="20sp"
-                    android:textColor="#000" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_locationBuy"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/tv_stockBuy"-->
+<!--                    android:layout_toRightOf="@+id/ic_locationBuy"-->
+<!--                    android:text="Magetan"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:textColor="#000" />-->
                 <TextView
                     android:id="@+id/tv_deskripsiBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_locationBuy"
+                    android:layout_below="@+id/tv_stockBuy"
                     android:layout_toRightOf="@+id/ic_deskripsiBuy"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:text="Terbuat dari tembaga dan alumunium yang terbaik."
                     android:textSize="16dp"
                     android:textColor="#000" />
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/mv_locationInBuy"
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
-                    android:layout_below="@id/tv_deskripsiBuy"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
-                    />
+
                 <TextView
                     android:id="@+id/tv_totalBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Beli : "
-                    android:layout_below="@+id/mv_locationInBuy"
+                    android:layout_below="@+id/tv_deskripsiBuy"
                     android:layout_marginLeft="27dp"
                     android:layout_marginTop="33dp"
                     android:textColor="#000"
@@ -154,7 +155,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/mv_locationInBuy"
+                    android:layout_below="@+id/tv_deskripsiBuy"
                     android:layout_toRightOf="@+id/tv_totalBuy">
                     <TextView
                         android:layout_width="35dp"
@@ -177,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/btn_buy"
-                    android:layout_below="@+id/mv_locationInBuy"
+                    android:layout_below="@+id/tv_deskripsiBuy"
                     android:background="@drawable/background_button"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
