@@ -106,7 +106,7 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
                 Intent toPostAcitivty = new Intent(Maps.this, PostActivity.class);
                 toPostAcitivty.putExtras(maps);
                 startActivity(toPostAcitivty);
-
+                onBackPressed();
             }
         });
 

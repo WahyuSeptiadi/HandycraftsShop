@@ -143,6 +143,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tambahBarang();
                 Intent toHome = new Intent(PostActivity.this, HomeActivity.class);
                 startActivity(toHome);
+//                onBackPressed();
             }
         });
 
