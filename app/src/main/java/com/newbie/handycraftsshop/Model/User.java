@@ -7,6 +7,13 @@ public class User {
     private String imageUrl;
     private String saldo;
 
+    public User(String id, String username, String imageUrl, String saldo) {
+        this.id = id;
+        this.username = username;
+        this.imageUrl = imageUrl;
+        this.saldo = saldo;
+    }
+
     public User(String id, String username, String imageUrl) {
         this.id = id;
         this.username = username;

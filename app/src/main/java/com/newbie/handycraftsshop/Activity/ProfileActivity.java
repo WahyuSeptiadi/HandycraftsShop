@@ -72,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ListPostProfileAdapter myAdapter;
 
     private SwipeRefreshLayout sRefresh;
+    private int saldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +139,9 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
                 nama_profile_User.setText(user.getUsername());
-                profil_saldo.setText(user.getSaldo());
+                saldo = Integer.valueOf(user.getSaldo());
+                profil_saldo.setText(String.valueOf(saldo));
+
                 Glide.with(getApplicationContext()).load(user.getImageUrl()).into(profileUser);
             }
 
@@ -203,7 +206,8 @@ public class ProfileActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        User user = new User(mUser, username, downloadUri.toString());
+
+                        User user = new User(mUser, username, downloadUri.toString(), String.valueOf(saldo));
                         reference.setValue(user);
                     }else{
                         Toast.makeText(ProfileActivity.this, "Failed Posting", Toast.LENGTH_SHORT).show();
