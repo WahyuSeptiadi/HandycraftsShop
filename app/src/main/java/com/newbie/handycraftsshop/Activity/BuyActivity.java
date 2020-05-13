@@ -46,7 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallback {
+public class BuyActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "BuyActivity";
     private ImageView btnBack;
@@ -65,7 +65,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
     private double latitude, longitude;
     FirebaseUser firebaseUser;
 
-    DatabaseReference reference,referencePublisher;
+    DatabaseReference reference, referencePublisher;
     private int saldo_user_sekarang, saldo_publisher;
 
     @Override
@@ -89,8 +89,8 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
         buyModel = new BuyModel();
         String totBar = et_totalBeli.getText().toString();
 
-        mapView =(MapView) findViewById(R.id.mv_locationInBuy);
-        if(mapView != null){
+        mapView = (MapView) findViewById(R.id.mv_locationInBuy);
+        if (mapView != null) {
             mapView.onCreate(null);
             mapView.onResume();
             mapView.getMapAsync(this);
@@ -132,6 +132,8 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
             }
         });
 
+        //
+
         int hargaBarang = hargabarang;
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +160,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
                                     reference.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                                         @Override
                                         public void onComplete(@NonNull Task task) {
-                                            Toast.makeText(BuyActivity.this, "Anda telah memesan " + deskripsi, Toast.LENGTH_LONG).show();
+                                            Toast.makeText(BuyActivity.this, "Anda telah memesan " + namabarang, Toast.LENGTH_LONG).show();
                                         }
                                     });
                                     referencePublisher.updateChildren(hashMapPublish).addOnCompleteListener(new OnCompleteListener() {
@@ -166,6 +168,9 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
                                         public void onComplete(@NonNull Task task) {
                                         }
                                     });
+
+                                    db.collection("Data Postingan").document(id_barang)
+                                            .update("stockbarang", Integer.valueOf(stock - totalYangDiBeli));
                                     BuyActivity.super.onBackPressed();
                                 }
                             }
@@ -191,7 +196,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
         stock = getIntent().getIntExtra("stock", 0);
         imageURL = getIntent().getStringExtra("image");
         id_barang = getIntent().getStringExtra("id_barang");
-        idPublisher= getIntent().getStringExtra("userID");
+        idPublisher = getIntent().getStringExtra("userID");
         latitude = getIntent().getDoubleExtra("latitude", 0);
         longitude = getIntent().getDoubleExtra("longitude", 0);
 
@@ -225,7 +230,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
     }
 
 
-    private void moveCamera(LatLng latLng, float zoom){
+    private void moveCamera(LatLng latLng, float zoom) {
         gMap.clear();
         Log.d(TAG, "moveCamera: moving camera " + latLng.latitude + latLng.longitude);
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -234,7 +239,7 @@ public class BuyActivity extends AppCompatActivity  implements OnMapReadyCallbac
         hideSoftKeyboard();
     }
 
-    private void hideSoftKeyboard(){
+    private void hideSoftKeyboard() {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 }

@@ -98,6 +98,9 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
                                 toBuy.putExtra("deskripsi", sampahModel.getDeskripsi());
                                 toBuy.putExtra("image", sampahModel.getImage());
                                 toBuy.putExtra("stock", sampahModel.getStockbarang());
+                                toBuy.putExtra("userID", sampahModel.getUserID());
+                                toBuy.putExtra("latitude", sampahModel.getLatitude());
+                                toBuy.putExtra("longitude", sampahModel.getLongitude());
                                 mContext.startActivity(toBuy);
                                 Log.d("CheckSampahModel",  sampahModel.getNama());
                                 Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
