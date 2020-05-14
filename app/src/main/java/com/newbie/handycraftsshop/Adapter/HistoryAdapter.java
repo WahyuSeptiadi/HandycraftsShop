@@ -52,7 +52,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ListView
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         holder.tv_namaBarang.setText(String.valueOf(listHistory.get(position).getNama_barang()));
-        holder.tv_hargaBarang.setText( "Harga \t: Rp."+String.valueOf(listHistory.get(position).getHarga_barang()));
+        holder.tv_hargaBarang.setText( "Harga \t\t: Rp."+String.valueOf(listHistory.get(position).getHarga_barang()));
         holder.tv_banyakBarang.setText("Banyak \t: "+String.valueOf(listHistory.get(position).getBanyak_barang()));
         holder.tv_totalHarga.setText(  "Total \t\t: Rp."+String.valueOf(listHistory.get(position).getHargaTotal()));
         Glide.with(mContext)
