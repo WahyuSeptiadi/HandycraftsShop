@@ -162,7 +162,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
         ImageView imgsampah_home, imgfavorite_home;
         ToggleButton img_wishlist;
         CircleImageView civ_imgpublisher;
-        Button btn_beli;
+        ImageView btn_beli;
         TextView tv_namaBarang, tv_usernamepublisher;
         public ListViewHolder(View itemView) {
             super(itemView);

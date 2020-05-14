@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -31,6 +32,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.newbie.handycraftsshop.Activity.BuyActivity;
+import com.newbie.handycraftsshop.Activity.HomeActivity;
+import com.newbie.handycraftsshop.Activity.ProfileActivity;
 import com.newbie.handycraftsshop.Activity.WishlistActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.Wishlist;
@@ -114,6 +117,18 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
 //        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
 //        Log.d("Image", listSampah.get(position).getImage());
 
+        db.collection("Data Postingan").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(Task<QuerySnapshot> task) {
+                if (listSampah.get(position).getUserID().equals(mUser)){
+                    holder.btn_beli.setVisibility(View.INVISIBLE);
+                    holder.img_wishlist.setVisibility(View.INVISIBLE);
+                    holder.visitProfile.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
         holder.btn_beli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,13 +151,23 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                                 toBuy.putExtra("latitude", sampahModel.getLatitude());
                                 toBuy.putExtra("longitude", sampahModel.getLongitude());
                                 mContext.startActivity(toBuy);
+
                                 Log.d("CheckSampahModel",  sampahModel.getNama());
+                                Log.d("ini mUser ",  "ini mUser"+mUser);
+                                Log.d("ini ID Publisher ", "ini id publisher "+listSampah.get(position).getUserID());
                                 Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
-//                                db.collection("users").document(mUser).collection("belibarang").document().set(sampahModel);
                             }
                         }
                     }
                 });
+            }
+        });
+
+        holder.visitProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toProfile = new Intent(mContext, ProfileActivity.class);
+                mContext.startActivity(toProfile);
             }
         });
 
@@ -197,8 +222,8 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         ImageView imgsampah_home, imgfavorite_home;
         ToggleButton img_wishlist;
         CircleImageView civ_imgpublisher;
-        Button btn_beli;
-        TextView tv_namaBarang, tv_usernamepublisher, tv_hargaBarang;
+        ImageView btn_beli;
+        TextView tv_namaBarang, tv_usernamepublisher, tv_hargaBarang, visitProfile;
 
         public ListViewHolder(View itemView) {
             super(itemView);
@@ -209,6 +234,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
             tv_hargaBarang = itemView.findViewById(R.id.tv_home_harga_barang);
             civ_imgpublisher = itemView.findViewById(R.id.civ_imagePublisher);
             tv_usernamepublisher = itemView.findViewById(R.id.tv_usernamepostinganHome);
+            visitProfile = itemView.findViewById(R.id.visitMyPost);
 
         }
     }
