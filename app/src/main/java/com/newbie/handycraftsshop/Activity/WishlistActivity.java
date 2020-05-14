@@ -90,7 +90,7 @@ public class WishlistActivity extends AppCompatActivity {
                         listOfWishlist.addAll(data);
                     }
                 }
-                Toast.makeText(WishlistActivity.this, listOfWishlist.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(WishlistActivity.this, listOfWishlist.toString(), Toast.LENGTH_LONG).show();
                 getDataFromFirestore();
             }
         });

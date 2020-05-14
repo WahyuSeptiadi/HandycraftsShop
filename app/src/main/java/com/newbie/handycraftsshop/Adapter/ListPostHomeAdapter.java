@@ -155,7 +155,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                                 Log.d("CheckSampahModel",  sampahModel.getNama());
                                 Log.d("ini mUser ",  "ini mUser"+mUser);
                                 Log.d("ini ID Publisher ", "ini id publisher "+listSampah.get(position).getUserID());
-                                Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(mContext, sampahModel.getNama(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -188,7 +188,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
                                     dictionary.put(document.getId(), true);
                                     docRefWishlist.set(dictionary, SetOptions.merge());
                                 }
@@ -201,7 +201,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
+//                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
                                     dictionary.put(document.getId(), FieldValue.delete());
                                     docRefWishlist.set(dictionary, SetOptions.merge());
                                 }

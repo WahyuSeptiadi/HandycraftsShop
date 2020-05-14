@@ -41,6 +41,7 @@ import com.newbie.handycraftsshop.R;
 import java.security.UnresolvedPermission;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Objects;
 import java.util.zip.Inflater;
@@ -60,6 +61,7 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
     private DocumentReference documentReference;
     private DatabaseReference reference;
     private FirebaseUser firebaseUser;
+    private int like_count;
 
     @NonNull
     @Override
@@ -80,9 +82,12 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                 .into(holder.imgSampah);
 
         int harga = listSampah.get(position).getHarga();
+        String nama_barang = listSampah.get(holder.getAdapterPosition()).getNama();
 
         holder.namaSampah.setText(listSampah.get(position).getNama());
         holder.hargaSampah.setText("Rp. "+ String.valueOf(harga));
+
+        setLikeCount(holder, nama_barang);
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,12 +119,10 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
 
                                 collectionReference.document(documentSnapshot.getId()).update(documentSnapshot.getData());
                                 mContext.startActivity(toUpdate);
-
                             }
                         }
                     }
                 });
-
             }
         });
 
@@ -158,7 +161,6 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                         }
                     }
                 });
-
             }
         });
     }
@@ -170,7 +172,7 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
         ImageView imgSampah, imgFavor, btnEdit, btnDelete;
-        TextView like, namaSampah, hargaSampah;
+        TextView like_count, namaSampah, hargaSampah;
 
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -181,7 +183,34 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
             namaSampah = itemView.findViewById(R.id.tv_nama_barang);
             hargaSampah = itemView.findViewById(R.id.tv_profile_harga_barang);
 //            imgFavor = itemView.findViewById(R.id.img_favorite_profile);
-//            like = itemView.findViewById(R.id.like);
+            like_count = itemView.findViewById(R.id.like_count);
         }
+    }
+
+    private void changingText(@NonNull ListViewHolder holder, String id_barang){
+        db = FirebaseFirestore.getInstance();
+        db.collection("wishlist").whereEqualTo(id_barang, true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    like_count = Objects.requireNonNull(task.getResult()).size();
+                    holder.like_count.setText(String.valueOf(like_count));
+                }
+            }
+        });
+    }
+
+    private void setLikeCount(@NonNull ListViewHolder holder, String nama_barang){
+        db = FirebaseFirestore.getInstance();
+        db.collection("Data Postingan").whereEqualTo("nama", nama_barang).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (DocumentSnapshot document : task.getResult()) {
+                        changingText(holder, document.getId());
+                    }
+                }
+            }
+        });
     }
 }
