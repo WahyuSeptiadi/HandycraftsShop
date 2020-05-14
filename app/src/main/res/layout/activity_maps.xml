@@ -29,7 +29,7 @@
         android:id="@+id/my_location"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/my_location"
+        android:src="@drawable/ic_location"
         android:layout_alignParentRight="true"
         android:layout_below="@id/sv_location"
         android:layout_marginRight="16dp"

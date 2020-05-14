@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,7 +65,7 @@ import static com.newbie.handycraftsshop.Constant.ERROR_DIALOG_REQUEST;
 import static com.newbie.handycraftsshop.Constant.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION;
 import static com.newbie.handycraftsshop.Constant.PERMISSIONS_REQUEST_ENABLE_GPS;
 
-public class Maps extends AppCompatActivity implements OnMapReadyCallback{
+public class Maps extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "Maps Activity";
     private static final float DEFAULT_ZOOM = 15f;
@@ -82,6 +84,8 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
     private String mUser;
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+
+    LatLng latLngCurrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,8 +376,7 @@ public class Maps extends AppCompatActivity implements OnMapReadyCallback{
                             Location currentLocation = (Location) task.getResult();
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
-                                    DEFAULT_ZOOM,
-                                    "My Location");
+                                    DEFAULT_ZOOM, "My Location");
 
                         }else{
                             Log.d(TAG, "onComplete: current location is null");

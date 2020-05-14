@@ -79,6 +79,11 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                 .load(listSampah.get(position).getImage())
                 .into(holder.imgSampah);
 
+        int harga = listSampah.get(position).getHarga();
+
+        holder.namaSampah.setText(listSampah.get(position).getNama());
+        holder.hargaSampah.setText("Rp. "+ String.valueOf(harga));
+
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,16 +170,18 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
         ImageView imgSampah, imgFavor, btnEdit, btnDelete;
-        TextView like;
+        TextView like, namaSampah, hargaSampah;
 
         public ListViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imgSampah = itemView.findViewById(R.id.img_sampahProfile);
-            imgFavor = itemView.findViewById(R.id.img_favorite_profile);
             btnDelete = itemView.findViewById(R.id.btn_delete);
             btnEdit = itemView.findViewById(R.id.btn_edit);
-            like = itemView.findViewById(R.id.like);
+            namaSampah = itemView.findViewById(R.id.tv_nama_barang);
+            hargaSampah = itemView.findViewById(R.id.tv_profile_harga_barang);
+//            imgFavor = itemView.findViewById(R.id.img_favorite_profile);
+//            like = itemView.findViewById(R.id.like);
         }
     }
 }

@@ -46,6 +46,8 @@ import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.Map;
+
 public class PostActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private Button btnPost;
@@ -91,6 +93,7 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FirebaseUser firebaseUser;
     private DatabaseReference databaseReference;
 
+    private ImageView toMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,8 +112,9 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapsModel = new MapsModel();
         user = new User();
 
-
         mapView =(MapView) findViewById(R.id.mv_location);
+        toMap = findViewById(R.id.imgToMap);
+
         if(mapView != null){
             mapView.onCreate(null);
             mapView.onResume();
@@ -159,6 +163,14 @@ public class PostActivity extends AppCompatActivity implements OnMapReadyCallbac
             latit = bundle.getDouble("latitude");
             longit = bundle.getDouble("longitude");
         }
+
+        toMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent toMap = new Intent(PostActivity.this, Maps.class);
+                startActivity(toMap);
+            }
+        });
     }
 
     @Override

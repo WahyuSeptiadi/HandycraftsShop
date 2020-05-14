@@ -34,7 +34,7 @@
         android:textColor="#fff" />
 
     <LinearLayout
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="16dp"
         android:layout_below="@id/topBar"
         android:id="@+id/ll_login_box"
         android:layout_width="match_parent"

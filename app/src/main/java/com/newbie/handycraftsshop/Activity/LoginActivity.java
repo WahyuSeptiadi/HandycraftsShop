@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,22 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     ProgressDialog pd;
-
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (firebaseUser != null){
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-
-     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

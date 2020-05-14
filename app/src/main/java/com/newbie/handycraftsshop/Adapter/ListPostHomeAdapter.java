@@ -84,8 +84,10 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         for (Map.Entry<String, SampahModel> e : data.entrySet()) {
             percobaan.put(e.getKey(), e.getValue().getImage());
         }
+        int harga = listSampah.get(position).getHarga();
         holder.tv_namaBarang.setText(listSampah.get(position).getNama());
         holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
+        holder.tv_hargaBarang.setText("Rp. "+String.valueOf(harga));
         Glide.with(mContext)
                 .load(listSampah.get(position).getImage())
                 .into(holder.imgsampah_home);
@@ -196,13 +198,15 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
         ToggleButton img_wishlist;
         CircleImageView civ_imgpublisher;
         Button btn_beli;
-        TextView tv_namaBarang, tv_usernamepublisher;
+        TextView tv_namaBarang, tv_usernamepublisher, tv_hargaBarang;
+
         public ListViewHolder(View itemView) {
             super(itemView);
             imgsampah_home = itemView.findViewById(R.id.imgSampahPost);
             img_wishlist = itemView.findViewById(R.id.followed_botton);
             btn_beli = itemView.findViewById(R.id.btn_beli_home);
             tv_namaBarang = itemView.findViewById(R.id.tv_nama_barang);
+            tv_hargaBarang = itemView.findViewById(R.id.tv_home_harga_barang);
             civ_imgpublisher = itemView.findViewById(R.id.civ_imagePublisher);
             tv_usernamepublisher = itemView.findViewById(R.id.tv_usernamepostinganHome);
 
