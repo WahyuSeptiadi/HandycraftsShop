@@ -44,7 +44,9 @@ import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -101,7 +103,6 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         sRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -137,10 +138,14 @@ public class ProfileActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Locale localeID = new Locale("in", "ID");
+                NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+
                 user = dataSnapshot.getValue(User.class);
                 nama_profile_User.setText(user.getUsername());
                 saldo = Integer.valueOf(user.getSaldo());
-                profil_saldo.setText(user.getSaldo());
+                profil_saldo.setText(formatRp.format((double)saldo));
                 Glide.with(getApplicationContext()).load(user.getImageUrl()).into(profileUser);
             }
 

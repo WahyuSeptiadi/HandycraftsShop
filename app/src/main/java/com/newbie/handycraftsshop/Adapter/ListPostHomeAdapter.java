@@ -39,9 +39,11 @@ import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.Wishlist;
 import com.newbie.handycraftsshop.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -88,9 +90,13 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
             percobaan.put(e.getKey(), e.getValue().getImage());
         }
         int harga = listSampah.get(position).getHarga();
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+
         holder.tv_namaBarang.setText(listSampah.get(position).getNama());
         holder.tv_usernamepublisher.setText(listSampah.get(position).getUsernamepublisher());
-        holder.tv_hargaBarang.setText("Rp. "+String.valueOf(harga));
+        holder.tv_hargaBarang.setText(formatRp.format((double)harga));
+
         Glide.with(mContext)
                 .load(listSampah.get(position).getImage())
                 .into(holder.imgsampah_home);

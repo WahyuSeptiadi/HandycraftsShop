@@ -42,6 +42,7 @@ import com.newbie.handycraftsshop.Model.User;
 import com.newbie.handycraftsshop.R;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -205,7 +206,11 @@ public class BuyActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void setInten(String namabarang1, String deskrpsi1, int hargabarang1, int stock1, String imageurl, double latit, double longit) {
         tv_deskripsi.setText(deskrpsi1);
-        tv_harga.setText("Rp. " + Integer.toString(hargabarang1));
+
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+
+        tv_harga.setText(formatRp.format((double)hargabarang1));
         tv_stock.setText(Integer.toString(stock1));
         nama_item.setText(namabarang1);
         Glide.with(getApplicationContext()).load(imageurl).into(img_sampah);

@@ -22,7 +22,9 @@ import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.Wishlist;
 import com.newbie.handycraftsshop.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,10 +53,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ListView
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        int hargaBarang = listHistory.get(position).getHarga_barang();
+        int hargaTotalBarang = listHistory.get(position).getHargaTotal();
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+
         holder.tv_namaBarang.setText(String.valueOf(listHistory.get(position).getNama_barang()));
-        holder.tv_hargaBarang.setText( "Harga \t\t: Rp."+String.valueOf(listHistory.get(position).getHarga_barang()));
         holder.tv_banyakBarang.setText("Banyak \t: "+String.valueOf(listHistory.get(position).getBanyak_barang()));
-        holder.tv_totalHarga.setText(  "Total \t\t: Rp."+String.valueOf(listHistory.get(position).getHargaTotal()));
+        holder.tv_hargaBarang.setText( "Harga \t\t: "+formatRp.format((double)hargaBarang));
+        holder.tv_totalHarga.setText(  "Total \t\t: "+formatRp.format((double)hargaTotalBarang));
         Glide.with(mContext)
                 .load(listHistory.get(position).getImagesampah())
                 .into(holder.gambar_barang);

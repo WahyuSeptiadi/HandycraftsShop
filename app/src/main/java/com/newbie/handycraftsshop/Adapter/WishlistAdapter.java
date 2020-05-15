@@ -34,9 +34,11 @@ import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.Model.Wishlist;
 import com.newbie.handycraftsshop.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -77,8 +79,10 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
                 .into(holder.civ_imgpublisher);
         holder.img_wishlist.setChecked(true);
 
-//        Picasso.get().load(listSampah.get(position).getImage()).into(holder.imgsampah_home);
-//        Log.d("Image", listSampah.get(position).getImage());
+        int harga = listSampah.get(position).getHarga();
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+        holder.tv_hargaBarang.setText(formatRp.format((double)harga));
 
         holder.btn_beli.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,12 +167,13 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ListVi
         ToggleButton img_wishlist;
         CircleImageView civ_imgpublisher;
         ImageView btn_beli;
-        TextView tv_namaBarang, tv_usernamepublisher;
+        TextView tv_namaBarang, tv_usernamepublisher, tv_hargaBarang;
         public ListViewHolder(View itemView) {
             super(itemView);
             imgsampah_home = itemView.findViewById(R.id.imgSampahPost);
             img_wishlist = itemView.findViewById(R.id.followed_botton);
             btn_beli = itemView.findViewById(R.id.btn_beli_home);
+            tv_hargaBarang = itemView.findViewById(R.id.tv_home_harga_barang);
             tv_namaBarang = itemView.findViewById(R.id.tv_nama_barang);
             civ_imgpublisher = itemView.findViewById(R.id.civ_imagePublisher);
             tv_usernamepublisher = itemView.findViewById(R.id.tv_usernamepostinganHome);

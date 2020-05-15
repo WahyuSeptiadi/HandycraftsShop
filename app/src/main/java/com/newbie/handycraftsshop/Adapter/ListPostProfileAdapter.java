@@ -1,6 +1,8 @@
 package com.newbie.handycraftsshop.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,15 +36,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.newbie.handycraftsshop.Activity.PostActivity;
+import com.newbie.handycraftsshop.Activity.ProfileActivity;
 import com.newbie.handycraftsshop.Activity.UpdateActivity;
 import com.newbie.handycraftsshop.Model.SampahModel;
 import com.newbie.handycraftsshop.R;
 
 import java.security.UnresolvedPermission;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.zip.Inflater;
 
@@ -84,8 +89,11 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
         int harga = listSampah.get(position).getHarga();
         String nama_barang = listSampah.get(holder.getAdapterPosition()).getNama();
 
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRp = NumberFormat.getCurrencyInstance(localeID);
+
         holder.namaSampah.setText(listSampah.get(position).getNama());
-        holder.hargaSampah.setText("Rp. "+ String.valueOf(harga));
+        holder.hargaSampah.setText(formatRp.format((double)harga));
 
         setLikeCount(holder, nama_barang);
 
@@ -129,38 +137,57 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db = FirebaseFirestore.getInstance();
-                mAuth = FirebaseAuth.getInstance();
-                mUser = mAuth.getCurrentUser().getUid();
-                CollectionReference data_postingan = db.collection("Data Postingan");
-                String nameOfpic = listSampah.get(holder.getAdapterPosition()).getImage();
-                CollectionReference data_post = db.collection("users").document(mUser).collection("Data Post");
-
-                data_postingan.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for (DocumentSnapshot documentSnapshot : task.getResult()){
-                                data_postingan.document(documentSnapshot.getId()).delete();
-                                //Toast.makeText(mContext, "telah dihapus", Toast.LENGTH_LONG).show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                db = FirebaseFirestore.getInstance();
+                                mAuth = FirebaseAuth.getInstance();
+                                mUser = mAuth.getCurrentUser().getUid();
+                                CollectionReference data_postingan = db.collection("Data Postingan");
+                                String nameOfpic = listSampah.get(holder.getAdapterPosition()).getImage();
+                                CollectionReference data_post = db.collection("users").document(mUser).collection("Data Post");
 
-                                data_post.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                data_postingan.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()){
-                                            for (DocumentSnapshot document : task.getResult()) {
-                                                data_post.document(document.getId()).delete();
-                                                Toast.makeText(mContext, "telah dihapus "+document.getId(), Toast.LENGTH_LONG).show();
+                                            for (DocumentSnapshot documentSnapshot : task.getResult()){
+                                                data_postingan.document(documentSnapshot.getId()).delete();
+                                                //Toast.makeText(mContext, "telah dihapus", Toast.LENGTH_LONG).show();
+
+                                                data_post.whereEqualTo("image", nameOfpic).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()){
+                                                            for (DocumentSnapshot document : task.getResult()) {
+                                                                data_post.document(document.getId()).delete();
+                                                                Toast.makeText(mContext, listSampah.get(position).getNama()+" telah dihapus", Toast.LENGTH_LONG).show();
+
+                                                            }
+                                                        }
+                                                    }
+                                                });
 
                                             }
                                         }
                                     }
                                 });
+                                break;
 
-                            }
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Intent toProfile = new Intent(mContext, ProfileActivity.class);
+                                mContext.startActivity(toProfile);
+                                break;
                         }
                     }
-                });
+                };
+                AlertDialog.Builder ab = new AlertDialog.Builder(mContext);
+                ab.setMessage("Yakin dihapus barangnya?").setPositiveButton("Yoi", dialogClickListener)
+                        .setNegativeButton("Gak jadi", dialogClickListener).show();
+
+
             }
         });
     }

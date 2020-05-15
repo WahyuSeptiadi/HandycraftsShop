@@ -64,7 +64,7 @@
                 android:id="@+id/img_favorite_profile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="35dp"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/filled_heart" />
 
             <ImageView
