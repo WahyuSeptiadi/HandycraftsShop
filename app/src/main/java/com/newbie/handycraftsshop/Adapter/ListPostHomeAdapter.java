@@ -194,7 +194,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-//                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(mContext, listSampah.get(position).getNama()+" ditambah ke wishlist", Toast.LENGTH_SHORT).show();
                                     dictionary.put(document.getId(), true);
                                     docRefWishlist.set(dictionary, SetOptions.merge());
                                 }
@@ -207,7 +207,7 @@ public class ListPostHomeAdapter extends RecyclerView.Adapter<ListPostHomeAdapte
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()){
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-//                                    Toast.makeText(mContext, ""+document.getId(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(mContext, listSampah.get(position).getNama()+" dihapus dari wishlist", Toast.LENGTH_SHORT).show();
                                     dictionary.put(document.getId(), FieldValue.delete());
                                     docRefWishlist.set(dictionary, SetOptions.merge());
                                 }

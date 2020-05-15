@@ -73,7 +73,8 @@
                     android:layout_below="@id/mv_locationInBuy"
                     android:layout_marginTop="2.5dp"
                     android:layout_marginStart="2.5dp"
-                    android:src="@drawable/ic_price" />
+                    android:background="@drawable/bg_black"
+                    android:src="@drawable/ic_saldo" />
                 <ImageView
                     android:id="@+id/ic_stockBuy"
                     android:layout_width="wrap_content"
@@ -81,7 +82,9 @@
                     android:layout_below="@+id/ic_priceBuy"
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="2.5dp"
-                    android:src="@drawable/ic_stock"/>
+                    android:padding="5dp"
+                    android:background="@drawable/bg_hijau"
+                    android:src="@drawable/ic_stock" />
 
                 <ImageView
                     android:id="@+id/ic_locationBuy"
@@ -100,6 +103,8 @@
                     android:layout_below="@+id/ic_stockBuy"
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="2.5dp"
+                    android:padding="2.5dp"
+                    android:background="@drawable/bg_hijau"
                     android:src="@drawable/ic_deskrips"/>
 
                 <TextView
@@ -130,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_stockBuy"
                     android:layout_toRightOf="@+id/ic_deskripsiBuy"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="Terbuat dari tembaga dan alumunium yang terbaik."
                     android:textSize="16dp"

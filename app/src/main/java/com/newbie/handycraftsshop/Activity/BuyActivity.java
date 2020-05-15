@@ -148,7 +148,7 @@ public class BuyActivity extends AppCompatActivity implements OnMapReadyCallback
                     } else if (totalYangDiBeli > stock) {
                         Toast.makeText(BuyActivity.this, "Total barang yang Anda beli melebihi stok kami", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(BuyActivity.this, totBar, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BuyActivity.this, totBar, Toast.LENGTH_SHORT).show();
                         int harga = totalYangDiBeli * hargabarang;
                         BuyModel buyModel = new BuyModel(id_barang, Integer.parseInt(et_totalBeli.getText().toString()), harga, hargabarang, namabarang, imageURL);
                         db.collection("users").document(mUser).collection("belibarang").document().set(buyModel).addOnCompleteListener(new OnCompleteListener<Void>() {

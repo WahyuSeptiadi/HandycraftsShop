@@ -1,5 +1,6 @@
 package com.newbie.handycraftsshop.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -179,6 +180,7 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                             case DialogInterface.BUTTON_NEGATIVE:
                                 Intent toProfile = new Intent(mContext, ProfileActivity.class);
                                 mContext.startActivity(toProfile);
+                                ((Activity)mContext).finish();
                                 break;
                         }
                     }
@@ -186,8 +188,6 @@ public class ListPostProfileAdapter extends RecyclerView.Adapter<ListPostProfile
                 AlertDialog.Builder ab = new AlertDialog.Builder(mContext);
                 ab.setMessage("Yakin dihapus barangnya?").setPositiveButton("Yoi", dialogClickListener)
                         .setNegativeButton("Gak jadi", dialogClickListener).show();
-
-
             }
         });
     }

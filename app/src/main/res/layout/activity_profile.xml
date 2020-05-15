@@ -65,14 +65,15 @@
                     android:layout_marginTop="17dp"
                     android:textColor="@color/hitam" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/TEXTSaldo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_NamaProfile"
-                    android:text="Saldo : "
-                    android:textSize="20sp"
-                    android:textColor="@color/hitam"
+                    android:background="@drawable/bg_black"
+                    android:src="@drawable/ic_saldo"
+                    android:layout_marginTop="2dp"
+                    android:textColor="#4C4C4C"
                     android:gravity="start|center_vertical" />
 
                 <TextView
@@ -81,10 +82,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_NamaProfile"
                     android:layout_toRightOf="@+id/TEXTSaldo"
-                    android:paddingEnd="46dp"
+                    android:layout_marginStart="5dp"
                     android:textSize="20sp"
-                    android:text="13.000.000"
-                    android:textColor="@color/hitam" />
+                    android:text="0"
+                    android:textColor="#4C4C4C" />
 
             </RelativeLayout>
         </LinearLayout>
